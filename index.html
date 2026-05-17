@@ -479,15 +479,18 @@
       const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
       return icons[index] || String(index + 1);
     }
-
+function cleanNumber(value) {
+  const cleaned = String(value).replace(/[^0-9.-]/g, "");
+  return cleaned ? Number(cleaned) : 0;
+}
     function weekendRow(item, index) {
-      return `
-        <tr>
-          <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
-          <td><input value="${item.agent}" oninput="state.weekend[$index].agent = this.value; renderTotals();" /></td>
-          <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.weekend[$index].premium = parseFloat(this.value || 0); renderTotals();" /></td>
-        </tr>`;
-    }
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
+      <td><input value="${item.agent}" oninput="state.weekend[$index].agent = this.value; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.weekend[$index].premium = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
 
     function reviewRow(item, index) {
       return `
@@ -499,15 +502,15 @@
     }
 
     function ciRow(item, index) {
-      return `
-        <tr>
-          <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${item.rank}</span></td>
-          <td><input value="${item.agent}" oninput="state.ci[$index].agent = this.value; renderTotals();" /></td>
-          <td class="score"><input style="text-align:right" value="${item.policies}" oninput="state.ci[$index].policies = parseInt(this.value || 0); renderTotals();" /></td>
-          <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.ci[$index].premium = parseFloat(this.value || 0); state.ci[$index].annual = (parseFloat(this.value || 0) * 12); renderTotals();" /></td>
-          <td class="money"><input style="text-align:right" value="${item.annual}" oninput="state.ci[$index].annual = parseFloat(this.value || 0); renderTotals();" /></td>
-        </tr>`;
-    }
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${item.rank}</span></td>
+      <td><input value="${item.agent}" oninput="state.ci[$index].agent = this.value; renderTotals();" /></td>
+      <td class="score"><input style="text-align:right" value="${item.policies}" oninput="state.ci[$index].policies = cleanNumber(this.value); renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.ci[$index].premium = cleanNumber(this.value); state.ci[$index].annual = cleanNumber(this.value) * 12; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.annual}" oninput="state.ci[$index].annual = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
 
     function renderTotals() {
       const totalPremium = state.weekend.reduce((s, r) => s + Number(r.premium || 0), 0);

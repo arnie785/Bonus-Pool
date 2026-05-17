@@ -21,7 +21,11 @@
       --shadow: 0 20px 50px rgba(0,0,0,.38);
       --radius: 24px;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -33,7 +37,12 @@
         linear-gradient(180deg, #09111a 0%, #081421 100%);
       padding: 24px;
     }
-    .wrap { max-width: 1500px; margin: 0 auto; }
+
+    .wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
     .topbar {
       display:grid;
       grid-template-columns: 1.2fr 1fr;
@@ -41,12 +50,17 @@
       align-items: stretch;
       margin-bottom: 18px;
     }
-    .hero, .kpis, .card, .footer {
+
+    .hero,
+    .kpis,
+    .card,
+    .footer {
       background: var(--panel-2);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
+
     .hero {
       padding: 22px 24px;
       display:flex;
@@ -54,15 +68,19 @@
       align-items:center;
       min-height: 132px;
     }
+
     .badge {
-      width: 74px; height: 74px;
-      display:grid; place-items:center;
+      width: 74px;
+      height: 74px;
+      display:grid;
+      place-items:center;
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,204,77,.18), rgba(255,204,77,.05));
       border: 1px solid rgba(255,204,77,.24);
       font-size: 42px;
       flex: 0 0 auto;
     }
+
     h1 {
       margin: 0;
       font-size: clamp(2rem, 4vw, 3.2rem);
@@ -70,18 +88,24 @@
       letter-spacing: .06em;
       text-transform: uppercase;
     }
+
     .sub {
       margin-top: 8px;
       color: var(--muted);
       font-size: 1.05rem;
     }
-    .sub strong { color: var(--teal); }
+
+    .sub strong {
+      color: var(--teal);
+    }
+
     .kpis {
       padding: 16px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
+
     .kpi {
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border: 1px solid var(--line);
@@ -92,18 +116,41 @@
       align-items:center;
       min-height: 106px;
     }
+
     .kpiIcon {
-      width: 52px; height: 52px;
+      width: 52px;
+      height: 52px;
       border-radius: 18px;
-      display:grid; place-items:center;
+      display:grid;
+      place-items:center;
       font-size: 24px;
       flex: 0 0 auto;
     }
-    .kpi:nth-child(1) .kpiIcon { background: rgba(24,209,200,.14); }
-    .kpi:nth-child(2) .kpiIcon { background: rgba(74,141,255,.14); }
-    .kpi:nth-child(3) .kpiIcon { background: rgba(166,107,255,.14); }
-    .kpiLabel { color: var(--muted); font-size: .95rem; margin-bottom: 4px; }
-    .kpiValue { font-size: 1.5rem; font-weight: 800; line-height: 1.05; }
+
+    .kpi:nth-child(1) .kpiIcon {
+      background: rgba(24,209,200,.14);
+    }
+
+    .kpi:nth-child(2) .kpiIcon {
+      background: rgba(74,141,255,.14);
+    }
+
+    .kpi:nth-child(3) .kpiIcon {
+      background: rgba(166,107,255,.14);
+    }
+
+    .kpiLabel {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 4px;
+    }
+
+    .kpiValue {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
     .toolbar {
       display:flex;
       justify-content: space-between;
@@ -113,6 +160,7 @@
       color: var(--muted);
       font-size: .95rem;
     }
+
     .btn {
       appearance:none;
       border: 1px solid var(--line);
@@ -123,14 +171,22 @@
       cursor: pointer;
       font-weight: 700;
     }
-    .btn:hover { background: rgba(255,255,255,.08); }
+
+    .btn:hover {
+      background: rgba(255,255,255,.08);
+    }
+
     .grid {
       display:grid;
       grid-template-columns: 1.1fr 0.75fr 1.55fr;
       gap: 14px;
       align-items: stretch;
     }
-    .card { overflow:hidden; }
+
+    .card {
+      overflow:hidden;
+    }
+
     .cardHeader {
       padding: 16px 18px;
       font-size: 1rem;
@@ -142,16 +198,33 @@
       text-transform: uppercase;
       border-bottom: 1px solid var(--line);
     }
-    .cardHeader.teal { background: linear-gradient(90deg, rgba(24,209,200,.22), rgba(24,209,200,.08)); }
-    .cardHeader.blue { background: linear-gradient(90deg, rgba(74,141,255,.22), rgba(74,141,255,.08)); }
-    .cardHeader.purple { background: linear-gradient(90deg, rgba(166,107,255,.24), rgba(166,107,255,.09)); }
-    .cardHeader .ico {
-      width: 30px; height: 30px; border-radius: 10px; display:grid; place-items:center; color:#fff;
+
+    .cardHeader.teal {
+      background: linear-gradient(90deg, rgba(24,209,200,.22), rgba(24,209,200,.08));
     }
+
+    .cardHeader.blue {
+      background: linear-gradient(90deg, rgba(74,141,255,.22), rgba(74,141,255,.08));
+    }
+
+    .cardHeader.purple {
+      background: linear-gradient(90deg, rgba(166,107,255,.24), rgba(166,107,255,.09));
+    }
+
+    .cardHeader .ico {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+    }
+
     .table {
       width:100%;
       border-collapse: collapse;
     }
+
     .table thead th {
       text-align:left;
       padding: 14px 16px;
@@ -162,11 +235,14 @@
       position: sticky;
       top: 0;
     }
+
     .table td {
       padding: 12px 16px;
       border-bottom: 1px solid rgba(255,255,255,.06);
       font-size: 1rem;
+      white-space: nowrap;
     }
+
     .table input {
       width: 100%;
       background: transparent;
@@ -177,10 +253,12 @@
       font: inherit;
       outline: none;
     }
+
     .table input:focus {
       border-color: rgba(255,255,255,.18);
       background: rgba(255,255,255,.04);
     }
+
     .rank {
       display:inline-flex;
       align-items:center;
@@ -192,356 +270,323 @@
       color:#09111a;
       background: #dfe8f4;
     }
-    .rank.gold { background: var(--gold); }
-    .rank.silver { background: var(--silver); }
-    .rank.bronze { background: var(--bronze); }
-    .rank.neutral { background: rgba(24,209,200,.14); color: var(--teal); }
-    .money, .score { font-variant-numeric: tabular-nums; text-align:right; font-weight:700; }
-    .money { color:#79efe9; }
-    .score { color:#7ab1ff; }
-    .totalRow td {
-      background: linear-gradient(90deg, rgba(166,107,255,.22), rgba(166,107,255,.10));
-      font-weight: 800;
+
+    .rank.gold {
+      background: var(--gold);
     }
+
+    .rank.silver {
+      background: var(--silver);
+    }
+
+    .rank.bronze {
+      background: var(--bronze);
+    }
+
+    .rank.neutral {
+      background: rgba(24,209,200,.14);
+      color: var(--teal);
+    }
+
+    .money,
+    .score {
+      font-variant-numeric: tabular-nums;
+      text-align:right;
+      font-weight:700;
+    }
+
+    .money {
+      color:#79efe9;
+    }
+
+    .score {
+      color:#7ab1ff;
+    }
+
     .footer {
       margin-top: 18px;
       padding: 18px 22px;
       display:flex;
-      justify-content:space-between;
+      justify-content:center;
       align-items:center;
-      gap: 18px;
+      text-align:center;
+      min-height:90px;
       background: linear-gradient(90deg, rgba(24,209,200,.11), rgba(74,141,255,.11));
     }
-    .footer strong { color: var(--teal); }
-    .small {
-      color: var(--muted);
-      font-size: .92rem;
-      margin-top: 4px;
-    }
+
     @media (max-width: 1200px) {
-      .topbar, .grid, .kpis { grid-template-columns: 1fr; }
-      body { padding: 12px; }
+      .topbar,
+      .grid,
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+
+      body {
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="topbar">
-      <div class="hero">
-        <div class="badge">🏆</div>
-        <div>
-          <h1>Bonus Pool</h1>
-          <div class="sub">Weekend Bonus <strong>May 15–17</strong></div>
-          <div class="small">Editable single-file dashboard. Use the buttons below to save, reset, or share it with your team.</div>
-        </div>
-      </div>
-      <div class="kpis">
-        <div class="kpi">
-          <div class="kpiIcon">👤</div>
-          <div>
-            <div class="kpiLabel">Total Premium</div>
-            <div class="kpiValue" id="kpiPremium"></div>
-          </div>
-        </div>
-        <div class="kpi">
-          <div class="kpiIcon">🛡️</div>
-          <div>
-            <div class="kpiLabel">Total Annual (x12)</div>
-            <div class="kpiValue" id="kpiAnnual"></div>
-          </div>
-        </div>
-        <div class="kpi">
-          <div class="kpiIcon">👥</div>
-          <div>
-            <div class="kpiLabel">Total Policies</div>
-            <div class="kpiValue" id="kpiPolicies"></div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <div class="toolbar">
-      <div>Tip: edit the values directly in the tables. Totals update instantly.</div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn" onclick="saveState()">Save Changes</button>
-        <button class="btn" onclick="resetState()">Reset Defaults</button>
+<div class="wrap">
+
+  <section class="topbar">
+
+    <div class="hero">
+      <div class="badge">🏆</div>
+      <div>
+        <h1>Bonus Pool</h1>
+        <div class="sub">Weekend Bonus <strong>May 15–17</strong></div>
       </div>
     </div>
 
-    <section class="grid">
-      <article class="card">
-        <div class="cardHeader teal"><span class="ico" style="background:#18d1c8;">🏆</span> 1. Weekend Bonus May 15–17</div>
-        <table class="table" id="weekendTable">
-          <thead>
-            <tr><th style="width: 24%;">#</th><th>Agent</th><th style="width: 42%; text-align:right;">Premium</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </article>
+    <div class="kpis">
 
-      <article class="card">
-        <div class="cardHeader blue"><span class="ico" style="background:#4a8dff;">⭐</span> 2. Google Reviews Contest</div>
-        <table class="table" id="reviewsTable">
-          <thead>
-            <tr><th style="width: 24%;">#</th><th>Agent</th><th style="width: 28%; text-align:right;">Reviews</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </article>
+      <div class="kpi">
+        <div class="kpiIcon">👤</div>
+        <div>
+          <div class="kpiLabel">Total Premium</div>
+          <div class="kpiValue" id="kpiPremium"></div>
+        </div>
+      </div>
 
-      <article class="card">
-        <div class="cardHeader purple"><span class="ico" style="background:#a66bff;">🛡️</span> 3. Critical Illness — Supplemental</div>
-        <table class="table" id="ciTable">
-          <thead>
-            <tr><th style="width: 12%;">#</th><th>Agent</th><th style="width: 18%; text-align:right;">Policies</th><th style="width: 25%; text-align:right;">Premium</th><th style="width: 25%; text-align:right;">Annual</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </article>
-    </section>
+      <div class="kpi">
+        <div class="kpiIcon">🛡️</div>
+        <div>
+          <div class="kpiLabel">Total Annual (x12)</div>
+          <div class="kpiValue" id="kpiAnnual"></div>
+        </div>
+      </div>
 
-   <section class="footer" style="justify-content:center; align-items:center; text-align:center; min-height:90px;">
-  <div style="width:100%;">
-    <div style="font-size:1.6rem; font-weight:800;">
+      <div class="kpi">
+        <div class="kpiIcon">👥</div>
+        <div>
+          <div class="kpiLabel">Total Policies</div>
+          <div class="kpiValue" id="kpiPolicies"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="toolbar">
+    <div>Tip: edit the values directly in the tables. Totals update instantly.</div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn" onclick="saveState()">Save Changes</button>
+      <button class="btn" onclick="resetState()">Reset Defaults</button>
+    </div>
+  </div>
+
+  <section class="grid">
+
+    <article class="card">
+      <div class="cardHeader teal">
+        <span class="ico" style="background:#18d1c8;">🏆</span>
+        1. Weekend Bonus May 15–17
+      </div>
+
+      <table class="table" id="weekendTable">
+        <thead>
+          <tr>
+            <th style="width:24%;">#</th>
+            <th>Agent</th>
+            <th style="width:42%; text-align:right;">Premium</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+    <article class="card">
+      <div class="cardHeader blue">
+        <span class="ico" style="background:#4a8dff;">⭐</span>
+        2. Google Reviews Contest
+      </div>
+
+      <table class="table" id="reviewsTable">
+        <thead>
+          <tr>
+            <th style="width:24%;">#</th>
+            <th>Agent</th>
+            <th style="width:28%; text-align:right;">Reviews</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+    <article class="card">
+      <div class="cardHeader purple">
+        <span class="ico" style="background:#a66bff;">🛡️</span>
+        3. Critical Illness — Supplemental
+      </div>
+
+      <table class="table" id="ciTable">
+        <thead>
+          <tr>
+            <th style="width:12%;">#</th>
+            <th>Agent</th>
+            <th style="width:18%; text-align:right;">Policies</th>
+            <th style="width:25%; text-align:right;">Premium</th>
+            <th style="width:25%; text-align:right;">Annual</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+  </section>
+
+  <section class="footer">
+    <div style="font-size:1.6rem; font-weight:800; width:100%;">
       🚀 Great work team! Keep the momentum going and aim higher every weekend!
     </div>
-  </div>
-</section>
-  </div>
+  </section>
 
-  <script>
-    const defaultData = {
-  "weekend": [
-    {
-      "rank": 1,
-      "agent": "Christy",
-      "premium": $29,485.2
-    },
-    {
-      "rank": 2,
-      "agent": "Tonya",
-      "premium": $21,137.88
-    },
-    {
-      "rank": 3,
-      "agent": "Caleb",
-      "premium": $13,784.16
-    },
-    {
-      "rank": 4,
-      "agent": "Dakota",
-      "premium": $12,972.6
-    },
-    {
-      "rank": 5,
-      "agent": "Lore",
-      "premium": $11,850.96
-    },
-    {
-      "rank": 6,
-      "agent": "Ny",
-      "premium": $8,819.64
-    },
-    {
-      "rank": 7,
-      "agent": "Sharise",
-      "premium": $2,510.76
-    },
-    {
-      "rank": 8,
-      "agent": "Chelle",
-      "premium": $812.64
-    },
-    {
-      "rank": 9,
-      "agent": "Misty",
-      "premium": 0.0
-    },
-    {
-      "rank": 10,
-      "agent": "Verson",
-      "premium": 0.0
-    }
+</div>
+
+<script>
+
+const defaultData = {
+  weekend: [
+    { rank: 1, agent: "Christy", premium: 29485.20 },
+    { rank: 2, agent: "Tonya", premium: 21137.88 },
+    { rank: 3, agent: "Caleb", premium: 13784.16 },
+    { rank: 4, agent: "Dakota", premium: 12972.60 },
+    { rank: 5, agent: "Lore", premium: 11850.96 },
+    { rank: 6, agent: "Ny", premium: 8819.64 },
+    { rank: 7, agent: "Sharise", premium: 2510.76 },
+    { rank: 8, agent: "Chelle", premium: 812.64 },
+    { rank: 9, agent: "Misty", premium: 0 },
+    { rank: 10, agent: "Verson", premium: 0 }
   ],
-  "reviews": [
-    {
-      "rank": 1,
-      "agent": "Lore",
-      "reviews": 7
-    },
-    {
-      "rank": 2,
-      "agent": "Nyehl",
-      "reviews": 7
-    },
-    {
-      "rank": 3,
-      "agent": "Tonya",
-      "reviews": 5
-    },
-    {
-      "rank": 4,
-      "agent": "Michelle",
-      "reviews": 4
-    },
-    {
-      "rank": 5,
-      "agent": "Dakota",
-      "reviews": 3
-    },
-    {
-      "rank": 6,
-      "agent": "Caleb",
-      "reviews": 2
-    },
-    {
-      "rank": 7,
-      "agent": "Sharise",
-      "reviews": 2
-    },
-    {
-      "rank": 8,
-      "agent": "Christy",
-      "reviews": 1
-    },
-    {
-      "rank": 9,
-      "agent": "Misty",
-      "reviews": 1
-    }
+
+  reviews: [
+    { rank: 1, agent: "Lore", reviews: 7 },
+    { rank: 2, agent: "Nyehl", reviews: 7 },
+    { rank: 3, agent: "Tonya", reviews: 5 },
+    { rank: 4, agent: "Michelle", reviews: 4 },
+    { rank: 5, agent: "Dakota", reviews: 3 },
+    { rank: 6, agent: "Caleb", reviews: 2 },
+    { rank: 7, agent: "Sharise", reviews: 2 },
+    { rank: 8, agent: "Christy", reviews: 1 },
+    { rank: 9, agent: "Misty", reviews: 1 }
   ],
-  "ci": [
-    {
-      "rank": 1,
-      "agent": "Tonya",
-      "policies": 1,
-      "premium": $338.24,
-      "annual": $4,058.88
-    },
-    {
-      "rank": 2,
-      "agent": "Ny",
-      "policies": 1,
-      "premium": $18.54,
-      "annual": $222.48
-    },
-    {
-      "rank": 3,
-      "agent": "Lore",
-      "policies": 1,
-      "premium": $42.43,
-      "annual": $509.16
-    },
-    {
-      "rank": 4,
-      "agent": "Christy",
-      "policies": 2,
-      "premium": $115.53,
-      "annual": $1,386.36
-    },
-    {
-      "rank": 5,
-      "agent": "Dakota",
-      "policies": 1,
-      "premium": $86.95,
-      "annual": $1,043.4
-    }
+
+  ci: [
+    { rank: 1, agent: "Tonya", policies: 1, premium: 338.24, annual: 4058.88 },
+    { rank: 2, agent: "Ny", policies: 1, premium: 18.54, annual: 222.48 },
+    { rank: 3, agent: "Lore", policies: 1, premium: 42.43, annual: 509.16 },
+    { rank: 4, agent: "Christy", policies: 2, premium: 115.53, annual: 1386.36 },
+    { rank: 5, agent: "Dakota", policies: 1, premium: 86.95, annual: 1043.40 }
   ]
 };
-    const storageKey = "bonus_pool_dashboard_v1";
 
-    const fmtMoney = n => Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
-    const fmtNum = n => Number(n || 0).toLocaleString("en-US");
+const storageKey = "bonus_pool_dashboard_v1";
 
-    function loadData() {
-      try {
-        const raw = localStorage.getItem(storageKey);
-        return raw ? JSON.parse(raw) : structuredClone(defaultData);
-      } catch {
-        return structuredClone(defaultData);
-      }
-    }
+const fmtMoney = n => Number(n || 0).toLocaleString("en-US", {
+  style: "currency",
+  currency: "USD"
+});
 
-    function saveState() {
-      localStorage.setItem(storageKey, JSON.stringify(state));
-      alert("Saved in this browser.");
-    }
+const fmtNum = n => Number(n || 0).toLocaleString("en-US");
 
-    function resetState() {
-      localStorage.removeItem(storageKey);
-      state = structuredClone(defaultData);
-      render();
-    }
-
-    let state = loadData();
-
-    function rowIcon(index) {
-      const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
-      return icons[index] || String(index + 1);
-    }
 function cleanNumber(value) {
   const cleaned = String(value).replace(/[^0-9.-]/g, "");
   return cleaned ? Number(cleaned) : 0;
 }
-    function weekendRow(item, index) {
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    return raw ? JSON.parse(raw) : structuredClone(defaultData);
+  } catch {
+    return structuredClone(defaultData);
+  }
+}
+
+function saveState() {
+  localStorage.setItem(storageKey, JSON.stringify(state));
+  alert("Saved in this browser.");
+}
+
+function resetState() {
+  localStorage.removeItem(storageKey);
+  state = structuredClone(defaultData);
+  render();
+}
+
+let state = loadData();
+
+function rowIcon(index) {
+  const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+  return icons[index] || String(index + 1);
+}
+
+function weekendRow(item, index) {
   return `
     <tr>
       <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
-      <td><input value="${item.agent}" oninput="state.weekend[$index].agent = this.value; renderTotals();" /></td>
-      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.weekend[$index].premium = cleanNumber(this.value); renderTotals();" /></td>
+      <td><input value="${item.agent}" oninput="state.weekend[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.weekend[${index}].premium = cleanNumber(this.value); renderTotals();" /></td>
     </tr>`;
 }
 
-    function reviewRow(item, index) {
-      return `
-        <tr>
-          <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
-          <td><input value="${item.agent}" oninput="state.reviews[$index].agent = this.value; renderTotals();" /></td>
-          <td class="score"><input style="text-align:right" value="${item.reviews}" oninput="state.reviews[$index].reviews = parseInt(this.value || 0); renderTotals();" /></td>
-        </tr>`;
-    }
+function reviewRow(item, index) {
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
+      <td><input value="${item.agent}" oninput="state.reviews[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="score"><input style="text-align:right" value="${item.reviews}" oninput="state.reviews[${index}].reviews = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
 
-    function ciRow(item, index) {
+function ciRow(item, index) {
   return `
     <tr>
       <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${item.rank}</span></td>
-      <td><input value="${item.agent}" oninput="state.ci[$index].agent = this.value; renderTotals();" /></td>
-      <td class="score"><input style="text-align:right" value="${item.policies}" oninput="state.ci[$index].policies = cleanNumber(this.value); renderTotals();" /></td>
-      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.ci[$index].premium = cleanNumber(this.value); state.ci[$index].annual = cleanNumber(this.value) * 12; renderTotals();" /></td>
-      <td class="money"><input style="text-align:right" value="${item.annual}" oninput="state.ci[$index].annual = cleanNumber(this.value); renderTotals();" /></td>
+      <td><input value="${item.agent}" oninput="state.ci[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="score"><input style="text-align:right" value="${item.policies}" oninput="state.ci[${index}].policies = cleanNumber(this.value); renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.ci[${index}].premium = cleanNumber(this.value); state.ci[${index}].annual = cleanNumber(this.value) * 12; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.annual}" oninput="state.ci[${index}].annual = cleanNumber(this.value); renderTotals();" /></td>
     </tr>`;
 }
 
-    function renderTotals() {
-      const totalPremium = state.weekend.reduce((s, r) => s + Number(r.premium || 0), 0);
-      const totalAnnual = state.ci.reduce((s, r) => s + Number(r.annual || 0), 0);
-      const totalPolicies = state.ci.reduce((s, r) => s + Number(r.policies || 0), 0);
+function renderTotals() {
+  const totalPremium = state.weekend.reduce((s, r) => s + Number(r.premium || 0), 0);
+  const totalAnnual = state.ci.reduce((s, r) => s + Number(r.annual || 0), 0);
+  const totalPolicies = state.ci.reduce((s, r) => s + Number(r.policies || 0), 0);
 
-      document.getElementById("kpiPremium").textContent = fmtMoney(totalPremium);
-      document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
-      document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
+  document.getElementById("kpiPremium").textContent = fmtMoney(totalPremium);
+  document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+  document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
 
-      document.querySelector("#weekendTable tbody").innerHTML = state.weekend.map(weekendRow).join("");
-      document.querySelector("#reviewsTable tbody").innerHTML = state.reviews.map(reviewRow).join("");
-      document.querySelector("#ciTable tbody").innerHTML = state.ci.map(ciRow).join("");
+  document.querySelector("#weekendTable tbody").innerHTML = state.weekend.map(weekendRow).join("");
+  document.querySelector("#reviewsTable tbody").innerHTML = state.reviews.map(reviewRow).join("");
+  document.querySelector("#ciTable tbody").innerHTML = state.ci.map(ciRow).join("");
 
-      // Restore inputs after rerender
-      bindInputs();
-    }
+  bindInputs();
+}
 
-    function bindInputs() {
-      document.querySelectorAll("#weekendTable input, #reviewsTable input, #ciTable input").forEach(el => {
-        el.addEventListener("keydown", e => {
-          if (e.key === "Enter") e.target.blur();
-        });
-      });
-    }
+function bindInputs() {
+  document.querySelectorAll("#weekendTable input, #reviewsTable input, #ciTable input").forEach(el => {
+    el.addEventListener("keydown", e => {
+      if (e.key === "Enter") e.target.blur();
+    });
+  });
+}
 
-    function render() {
-      renderTotals();
-    }
+function render() {
+  renderTotals();
+}
 
-    render();
-  </script>
+render();
+
+</script>
+
 </body>
 </html>
+```

@@ -1,3 +1,8 @@
+# Complete Updated Bonus Pool Dashboard HTML
+
+Copy EVERYTHING below and replace your entire current HTML file with it.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -347,7 +352,7 @@
         <div class="kpiIcon">👤</div>
         <div>
           <div class="kpiLabel">Total Premium</div>
-          <div class="kpiValue" id="kpiPremium">$0</div>
+          <div class="kpiValue" id="kpiPremium"></div>
         </div>
       </div>
 
@@ -355,7 +360,7 @@
         <div class="kpiIcon">🛡️</div>
         <div>
           <div class="kpiLabel">Total Annual (x12)</div>
-          <div class="kpiValue" id="kpiAnnual">$0</div>
+          <div class="kpiValue" id="kpiAnnual"></div>
         </div>
       </div>
 
@@ -363,7 +368,7 @@
         <div class="kpiIcon">👥</div>
         <div>
           <div class="kpiLabel">Total Policies</div>
-          <div class="kpiValue" id="kpiPolicies">0</div>
+          <div class="kpiValue" id="kpiPolicies"></div>
         </div>
       </div>
 
@@ -393,4 +398,200 @@
           <tr>
             <th style="width:24%;">#</th>
             <th>Agent</th>
-            <th style="width:42%; text-align:right;">Premium</
+            <th style="width:42%; text-align:right;">Premium</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+    <article class="card">
+      <div class="cardHeader blue">
+        <span class="ico" style="background:#4a8dff;">⭐</span>
+        2. Google Reviews Contest
+      </div>
+
+      <table class="table" id="reviewsTable">
+        <thead>
+          <tr>
+            <th style="width:24%;">#</th>
+            <th>Agent</th>
+            <th style="width:28%; text-align:right;">Reviews</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+    <article class="card">
+      <div class="cardHeader purple">
+        <span class="ico" style="background:#a66bff;">🛡️</span>
+        3. Critical Illness — Supplemental
+      </div>
+
+      <table class="table" id="ciTable">
+        <thead>
+          <tr>
+            <th style="width:12%;">#</th>
+            <th>Agent</th>
+            <th style="width:18%; text-align:right;">Policies</th>
+            <th style="width:25%; text-align:right;">Premium</th>
+            <th style="width:25%; text-align:right;">Annual</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+
+  </section>
+
+  <section class="footer">
+    <div style="font-size:1.6rem; font-weight:800; width:100%;">
+      🚀 Great work team! Keep the momentum going and aim higher every weekend!
+    </div>
+  </section>
+
+</div>
+
+<script>
+
+const defaultData = {
+  weekend: [
+    { rank: 1, agent: "Christy", premium: 29485.20 },
+    { rank: 2, agent: "Tonya", premium: 21137.88 },
+    { rank: 3, agent: "Caleb", premium: 13784.16 },
+    { rank: 4, agent: "Dakota", premium: 12972.60 },
+    { rank: 5, agent: "Lore", premium: 11850.96 },
+    { rank: 6, agent: "Ny", premium: 8819.64 },
+    { rank: 7, agent: "Sharise", premium: 2510.76 },
+    { rank: 8, agent: "Chelle", premium: 812.64 },
+    { rank: 9, agent: "Misty", premium: 0 },
+    { rank: 10, agent: "Verson", premium: 0 }
+  ],
+
+  reviews: [
+    { rank: 1, agent: "Lore", reviews: 7 },
+    { rank: 2, agent: "Nyehl", reviews: 7 },
+    { rank: 3, agent: "Tonya", reviews: 5 },
+    { rank: 4, agent: "Michelle", reviews: 4 },
+    { rank: 5, agent: "Dakota", reviews: 3 },
+    { rank: 6, agent: "Caleb", reviews: 2 },
+    { rank: 7, agent: "Sharise", reviews: 2 },
+    { rank: 8, agent: "Christy", reviews: 1 },
+    { rank: 9, agent: "Misty", reviews: 1 }
+  ],
+
+  ci: [
+    { rank: 1, agent: "Tonya", policies: 1, premium: 338.24, annual: 4058.88 },
+    { rank: 2, agent: "Ny", policies: 1, premium: 18.54, annual: 222.48 },
+    { rank: 3, agent: "Lore", policies: 1, premium: 42.43, annual: 509.16 },
+    { rank: 4, agent: "Christy", policies: 2, premium: 115.53, annual: 1386.36 },
+    { rank: 5, agent: "Dakota", policies: 1, premium: 86.95, annual: 1043.40 }
+  ]
+};
+
+const storageKey = "bonus_pool_dashboard_v1";
+
+const fmtMoney = n => Number(n || 0).toLocaleString("en-US", {
+  style: "currency",
+  currency: "USD"
+});
+
+const fmtNum = n => Number(n || 0).toLocaleString("en-US");
+
+function cleanNumber(value) {
+  const cleaned = String(value).replace(/[^0-9.-]/g, "");
+  return cleaned ? Number(cleaned) : 0;
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(storageKey);
+    return raw ? JSON.parse(raw) : structuredClone(defaultData);
+  } catch {
+    return structuredClone(defaultData);
+  }
+}
+
+function saveState() {
+  localStorage.setItem(storageKey, JSON.stringify(state));
+  alert("Saved in this browser.");
+}
+
+function resetState() {
+  localStorage.removeItem(storageKey);
+  state = structuredClone(defaultData);
+  render();
+}
+
+let state = loadData();
+
+function rowIcon(index) {
+  const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+  return icons[index] || String(index + 1);
+}
+
+function weekendRow(item, index) {
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
+      <td><input value="${item.agent}" oninput="state.weekend[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.weekend[${index}].premium = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
+
+function reviewRow(item, index) {
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
+      <td><input value="${item.agent}" oninput="state.reviews[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="score"><input style="text-align:right" value="${item.reviews}" oninput="state.reviews[${index}].reviews = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
+
+function ciRow(item, index) {
+  return `
+    <tr>
+      <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${item.rank}</span></td>
+      <td><input value="${item.agent}" oninput="state.ci[${index}].agent = this.value; renderTotals();" /></td>
+      <td class="score"><input style="text-align:right" value="${item.policies}" oninput="state.ci[${index}].policies = cleanNumber(this.value); renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.premium}" oninput="state.ci[${index}].premium = cleanNumber(this.value); state.ci[${index}].annual = cleanNumber(this.value) * 12; renderTotals();" /></td>
+      <td class="money"><input style="text-align:right" value="${item.annual}" oninput="state.ci[${index}].annual = cleanNumber(this.value); renderTotals();" /></td>
+    </tr>`;
+}
+
+function renderTotals() {
+  const totalPremium = state.weekend.reduce((s, r) => s + Number(r.premium || 0), 0);
+  const totalAnnual = state.ci.reduce((s, r) => s + Number(r.annual || 0), 0);
+  const totalPolicies = state.ci.reduce((s, r) => s + Number(r.policies || 0), 0);
+
+  document.getElementById("kpiPremium").textContent = fmtMoney(totalPremium);
+  document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+  document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
+
+  document.querySelector("#weekendTable tbody").innerHTML = state.weekend.map(weekendRow).join("");
+  document.querySelector("#reviewsTable tbody").innerHTML = state.reviews.map(reviewRow).join("");
+  document.querySelector("#ciTable tbody").innerHTML = state.ci.map(ciRow).join("");
+
+  bindInputs();
+}
+
+function bindInputs() {
+  document.querySelectorAll("#weekendTable input, #reviewsTable input, #ciTable input").forEach(el => {
+    el.addEventListener("keydown", e => {
+      if (e.key === "Enter") e.target.blur();
+    });
+  });
+}
+
+function render() {
+  renderTotals();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
+```

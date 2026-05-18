@@ -151,31 +151,6 @@
       line-height: 1.05;
     }
 
-    .toolbar {
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-      gap: 12px;
-      margin: 8px 0 18px;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-
-    .btn {
-      appearance:none;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,.08);
-    }
-
     .grid {
       display:grid;
       grid-template-columns: 1.1fr 0.75fr 1.55fr;
@@ -243,20 +218,19 @@
       white-space: nowrap;
     }
 
-    .table input {
-      width: 100%;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid transparent;
-      border-radius: 10px;
-      padding: 6px 8px;
-      font: inherit;
-      outline: none;
+    .money,
+    .score {
+      font-variant-numeric: tabular-nums;
+      text-align:right;
+      font-weight:700;
     }
 
-    .table input:focus {
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.04);
+    .money {
+      color:#79efe9;
+    }
+
+    .score {
+      color:#7ab1ff;
     }
 
     .rank {
@@ -286,21 +260,6 @@
     .rank.neutral {
       background: rgba(24,209,200,.14);
       color: var(--teal);
-    }
-
-    .money,
-    .score {
-      font-variant-numeric: tabular-nums;
-      text-align:right;
-      font-weight:700;
-    }
-
-    .money {
-      color:#79efe9;
-    }
-
-    .score {
-      color:#7ab1ff;
     }
 
     .footer {
@@ -371,15 +330,6 @@
 
   </section>
 
-  <div class="toolbar">
-    <div>Tip: edit the values directly in the tables. Totals update instantly.</div>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn" onclick="saveState()">Save Changes</button>
-      <button class="btn" onclick="resetState()">Reset Defaults</button>
-    </div>
-  </div>
-
   <section class="grid">
 
     <article class="card">
@@ -449,41 +399,7 @@
 </div>
 
 <script>
-  const defaultData = {
-    weekend: [
-      { rank: 1, agent: "Christy", premium: 30374.52 },
-      { rank: 2, agent: "Tonya", premium: 28869.24 },
-      { rank: 3, agent: "Caleb", premium: 13784.16 },
-      { rank: 4, agent: "Dakota", premium: 12972.60 },
-      { rank: 5, agent: "Lore", premium: 11850.96 },
-      { rank: 6, agent: "Ny", premium: 8819.64 },
-      { rank: 7, agent: "Sharise", premium: 2510.76 },
-      { rank: 8, agent: "Chelle", premium: 812.64 },
-      { rank: 9, agent: "Misty", premium: 80.69 },
-      { rank: 10, agent: "Verson", premium: 0.00 }
-    ],
-    reviews: [
-      { rank: 1, agent: "Lore", reviews: 7 },
-      { rank: 2, agent: "Nyehl", reviews: 7 },
-      { rank: 3, agent: "Tonya", reviews: 5 },
-      { rank: 4, agent: "Michelle", reviews: 4 },
-      { rank: 5, agent: "Dakota", reviews: 3 },
-      { rank: 6, agent: "Caleb", reviews: 2 },
-      { rank: 7, agent: "Sharise", reviews: 2 },
-      { rank: 8, agent: "Misty", reviews: 2 },
-      { rank: 9, agent: "Christy", reviews: 1 }
-    ],
-    ci: [
-      { rank: 1, agent: "Tonya", policies: 3, premium: 384.00, annual: 4608.00 },
-      { rank: 2, agent: "Christy", policies: 5, premium: 189.64, annual: 2275.68 },
-      { rank: 3, agent: "Dakota", policies: 1, premium: 86.95, annual: 1043.40 },
-      { rank: 4, agent: "Lore", policies: 1, premium: 42.43, annual: 509.16 },
-      { rank: 5, agent: "Ny", policies: 1, premium: 18.54, annual: 222.48 }
-      
-    ]
-  };
-
-  const storageKey = "bonus_pool_dashboard_v3";
+  const API_URL = "https://script.google.com/a/macros/thebenefitsboss.com/s/AKfycbxXyMKJCVduRRU5XnmR6upiebcp7IA9SercGwIJphpTDQWyPcKR8xiFpkQLYutGdf1E/exec";
 
   const fmtMoney = n => Number(n || 0).toLocaleString("en-US", {
     style: "currency",
@@ -492,121 +408,78 @@
 
   const fmtNum = n => Number(n || 0).toLocaleString("en-US");
 
-  function cleanNumber(value) {
-    const cleaned = String(value).replace(/[^0-9.-]/g, "");
-    return cleaned ? Number(cleaned) : 0;
-  }
-
-  function loadData() {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      return raw ? JSON.parse(raw) : structuredClone(defaultData);
-    } catch {
-      return structuredClone(defaultData);
-    }
-  }
-
-  function saveState() {
-    localStorage.setItem(storageKey, JSON.stringify(state));
-    alert("Saved in this browser.");
-  }
-
-  function resetState() {
-    localStorage.removeItem(storageKey);
-    state = structuredClone(defaultData);
-    render();
-  }
-
-  let state = loadData();
-
   function rowIcon(index) {
     const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
     return icons[index] || String(index + 1);
   }
 
-  function weekendRow(item, index) {
-    return `
+  function setLoadingState() {
+    document.getElementById("kpiPremium").textContent = "Loading...";
+    document.getElementById("kpiAnnual").textContent = "Loading...";
+    document.getElementById("kpiPolicies").textContent = "Loading...";
+    document.querySelector("#weekendTable tbody").innerHTML = "";
+    document.querySelector("#reviewsTable tbody").innerHTML = "";
+    document.querySelector("#ciTable tbody").innerHTML = "";
+  }
+
+  function renderDashboard(data) {
+    const weekend = Array.isArray(data.weekend) ? data.weekend : [];
+    const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+    const supplemental = Array.isArray(data.supplemental) ? data.supplemental : [];
+
+    const totalWeekendPremium = weekend.reduce((s, r) => s + Number(r.premium || 0), 0);
+    const totalSupplementalAnnual = supplemental.reduce((s, r) => s + Number(r.annual || 0), 0);
+    const totalSupplementalPolicies = supplemental.reduce((s, r) => s + Number(r.policies || 0), 0);
+
+    document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
+    document.getElementById("kpiAnnual").textContent = fmtMoney(totalSupplementalAnnual);
+    document.getElementById("kpiPolicies").textContent = fmtNum(totalSupplementalPolicies);
+
+    document.querySelector("#weekendTable tbody").innerHTML = weekend.map((item, index) => `
       <tr>
         <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
-        <td><input value="${item.agent}" oninput="state.weekend[${index}].agent = this.value; renderTotals();" /></td>
-        <td class="money">
-          <input
-            style="text-align:right"
-            value="${fmtMoney(item.premium)}"
-            oninput="state.weekend[${index}].premium = cleanNumber(this.value); renderTotals();"
-          />
-        </td>
-      </tr>`;
-  }
+        <td>${item.agent ?? ""}</td>
+        <td class="money">${fmtMoney(item.premium)}</td>
+      </tr>
+    `).join("");
 
-  function reviewRow(item, index) {
-    return `
+    document.querySelector("#reviewsTable tbody").innerHTML = reviews.map((item, index) => `
       <tr>
         <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${rowIcon(index)}</span></td>
-        <td><input value="${item.agent}" oninput="state.reviews[${index}].agent = this.value; renderTotals();" /></td>
-        <td class="score">
-          <input style="text-align:right" value="${item.reviews}" oninput="state.reviews[${index}].reviews = cleanNumber(this.value); renderTotals();" />
-        </td>
-      </tr>`;
-  }
+        <td>${item.agent ?? ""}</td>
+        <td class="score">${fmtNum(item.reviews)}</td>
+      </tr>
+    `).join("");
 
-  function ciRow(item, index) {
-    return `
+    document.querySelector("#ciTable tbody").innerHTML = supplemental.map((item, index) => `
       <tr>
-        <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${item.rank}</span></td>
-        <td><input value="${item.agent}" oninput="state.ci[${index}].agent = this.value; renderTotals();" /></td>
-        <td class="score">
-          <input style="text-align:right" value="${item.policies}" oninput="state.ci[${index}].policies = cleanNumber(this.value); renderTotals();" />
-        </td>
-        <td class="money">
-          <input
-            style="text-align:right"
-            value="${fmtMoney(item.premium)}"
-            oninput="state.ci[${index}].premium = cleanNumber(this.value); state.ci[${index}].annual = cleanNumber(this.value) * 12; renderTotals();"
-          />
-        </td>
-        <td class="money">
-          <input
-            style="text-align:right"
-            value="${fmtMoney(item.annual)}"
-            oninput="state.ci[${index}].annual = cleanNumber(this.value); renderTotals();"
-          />
-        </td>
-      </tr>`;
+        <td><span class="rank ${index===0?'gold':index===1?'silver':index===2?'bronze':'neutral'}">${index + 1}</span></td>
+        <td>${item.agent ?? ""}</td>
+        <td class="score">${fmtNum(item.policies)}</td>
+        <td class="money">${fmtMoney(item.premium)}</td>
+        <td class="money">${fmtMoney(item.annual)}</td>
+      </tr>
+    `).join("");
   }
 
-  function renderTotals() {
-    const totalPremium = state.weekend.reduce((s, r) => s + Number(r.premium || 0), 0);
-    const totalAnnual = state.ci.reduce((s, r) => s + Number(r.annual || 0), 0);
-    const totalPolicies = state.ci.reduce((s, r) => s + Number(r.policies || 0), 0);
-
-    document.getElementById("kpiPremium").textContent = fmtMoney(totalPremium);
-    document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
-    document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
-
-    document.querySelector("#weekendTable tbody").innerHTML = state.weekend.map(weekendRow).join("");
-    document.querySelector("#reviewsTable tbody").innerHTML = state.reviews.map(reviewRow).join("");
-    document.querySelector("#ciTable tbody").innerHTML = state.ci.map(ciRow).join("");
-
-    bindInputs();
+  async function loadDashboard() {
+    try {
+      setLoadingState();
+      const res = await fetch(`${API_URL}?t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      renderDashboard(data);
+    } catch (err) {
+      console.error(err);
+      document.getElementById("kpiPremium").textContent = "Error";
+      document.getElementById("kpiAnnual").textContent = "Error";
+      document.getElementById("kpiPolicies").textContent = "Error";
+    }
   }
 
-  function bindInputs() {
-    document.querySelectorAll("#weekendTable input, #reviewsTable input, #ciTable input").forEach(el => {
-      el.onkeydown = e => {
-        if (e.key === "Enter") e.target.blur();
-      };
-    });
-  }
-
-  function render() {
-    renderTotals();
-  }
-
-  render();
+  loadDashboard();
+  setInterval(loadDashboard, 60000);
 </script>
-
 
 </body>
 </html>
-```

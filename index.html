@@ -89,18 +89,20 @@
 
     .heroText h1 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.3rem);
+      font-size: clamp(1.95rem, 3.8vw, 3.25rem);
       line-height: 1;
-      letter-spacing: .05em;
+      letter-spacing: .04em;
       text-transform: uppercase;
       font-weight: 900;
       color: var(--goldLight);
+      white-space: nowrap;
     }
 
     .sub {
       margin-top: 8px;
       color: var(--muted);
       font-size: 1.05rem;
+      white-space: nowrap;
     }
 
     .sub strong {
@@ -141,6 +143,7 @@
       color: var(--muted);
       font-size: .9rem;
       margin-bottom: 4px;
+      line-height: 1.25;
     }
 
     .kpiValue {
@@ -211,7 +214,7 @@
       font-weight: 800;
       font-variant-numeric: tabular-nums;
       color: #ffffff;
-      padding-right: 22px;
+      padding-right: 16px;
     }
 
     .rank {
@@ -246,7 +249,7 @@
     }
 
     .footerText {
-      font-size: 1.6rem;
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
       font-weight: 800;
       color: #ffffff;
       line-height: 1.35;
@@ -274,7 +277,12 @@
       }
 
       .heroText h1 {
+        white-space: normal;
         font-size: 3rem;
+      }
+
+      .sub {
+        white-space: normal;
       }
     }
   </style>

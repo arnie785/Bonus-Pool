@@ -1,150 +1,140 @@
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbzt5pERFAp0dVLNcqZQPBohgtghZkFU5B2hj5azb_HFBntyjz02TwUaCwpd1U_HDFyN/exec";
-  const REFRESH_MS = 60000;
+const API_URL = "https://script.google.com/macros/s/AKfycbzt5pERFAp0dVLNcqZQPBohgtghZkFU5B2hj5azb_HFBntyjz02TwUaCwpd1U_HDFyN/exec";
 
-  const fmtMoney = (n) =>
-    Number(n || 0).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    });
-
-  const fmtNum = (n) => Number(n || 0).toLocaleString("en-US");
-
-  function escapeHTML(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#39;");
-  }
-
-  function rowIcon(index) {
-    const icons = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
-    return icons[index] || String(index + 1);
-  }
-
-  function rankClass(index) {
-    if (index === 0) return "gold";
-    if (index === 1) return "silver";
-    if (index === 2) return "bronze";
-    return "neutral";
-  }
-
-  function setLoadingState() {
-    document.getElementById("kpiPremium").textContent = "Loading...";
-    document.getElementById("kpiAnnual").textContent = "Loading...";
-    document.getElementById("kpiPolicies").textContent = "Loading...";
-
-    document.querySelector("#weekendTable tbody").innerHTML = "";
-    document.querySelector("#reviewsTable tbody").innerHTML = "";
-    document.querySelector("#ciTable tbody").innerHTML = "";
-    document.querySelector("#accountabilityTable tbody").innerHTML = "";
-  }
-
-  function emptyRow(colspan, message) {
-    return `<tr class="empty-row"><td colspan="${colspan}">${escapeHTML(message)}</td></tr>`;
-  }
-
-  function renderDashboard(data) {
-    const weekend = Array.isArray(data?.weekend) ? data.weekend : [];
-    const reviews = Array.isArray(data?.reviews) ? data.reviews : [];
-    const supplemental = Array.isArray(data?.supplemental) ? data.supplemental : [];
-    const accountability = Array.isArray(data?.accountability) ? data.accountability : [];
-
-    const totalWeekendPremium = weekend.reduce((sum, row) => sum + Number(row?.premium || 0), 0);
-    const totalSupplementalAnnual = supplemental.reduce((sum, row) => sum + Number(row?.annual || 0), 0);
-    const totalSupplementalPolicies = supplemental.reduce((sum, row) => sum + Number(row?.policies || 0), 0);
-
-    document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
-    document.getElementById("kpiAnnual").textContent = fmtMoney(totalSupplementalAnnual);
-    document.getElementById("kpiPolicies").textContent = fmtNum(totalSupplementalPolicies);
-
-    document.querySelector("#weekendTable tbody").innerHTML = weekend.length
-      ? weekend.map((item, index) => `
-          <tr>
-            <td><span class="rank ${rankClass(index)}">${rowIcon(index)}</span></td>
-            <td>${escapeHTML(item.agent)}</td>
-            <td class="money">${fmtMoney(item.premium)}</td>
-          </tr>
-        `).join("")
-      : emptyRow(3, "No weekend data available.");
-
-    document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
-      ? reviews.map((item, index) => `
-          <tr>
-            <td><span class="rank ${rankClass(index)}">${rowIcon(index)}</span></td>
-            <td>${escapeHTML(item.agent)}</td>
-            <td class="score">${fmtNum(item.reviews)}</td>
-          </tr>
-        `).join("")
-      : emptyRow(3, "No review data available.");
-
-    document.querySelector("#ciTable tbody").innerHTML = supplemental.length
-      ? supplemental.map((item, index) => `
-          <tr>
-            <td><span class="rank ${rankClass(index)}">${index + 1}</span></td>
-            <td>${escapeHTML(item.agent)}</td>
-            <td class="score">${fmtNum(item.policies)}</td>
-            <td class="money">${fmtMoney(item.premium)}</td>
-            <td class="money">${fmtMoney(item.annual)}</td>
-          </tr>
-        `).join("")
-      : emptyRow(5, "No supplemental data available.");
-
-    document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
-      ? accountability.map((item, index) => `
-          <tr>
-            <td><span class="rank ${rankClass(index)}">${index + 1}</span></td>
-            <td>${escapeHTML(item.team)}</td>
-            <td class="score">${fmtNum(item.total)}</td>
-          </tr>
-        `).join("")
-      : emptyRow(3, "No accountability data available.");
-  }
-
-  function renderErrorState(message) {
-    document.getElementById("kpiPremium").textContent = "Error";
-    document.getElementById("kpiAnnual").textContent = "Error";
-    document.getElementById("kpiPolicies").textContent = "Error";
-
-    document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
-    document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
-    document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
-    document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
-  }
-
-  function loadDashboard() {
-    setLoadingState();
-
-    const callbackName = `bonusPoolCb_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    let scriptEl = document.createElement("script");
-
-    window[callbackName] = function (data) {
-      try {
-        renderDashboard(data);
-      } finally {
-        delete window[callbackName];
-        if (scriptEl && scriptEl.parentNode) {
-          scriptEl.parentNode.removeChild(scriptEl);
-        }
-      }
-    };
-
-    scriptEl.src = `${API_URL}?callback=${encodeURIComponent(callbackName)}&t=${Date.now()}`;
-    scriptEl.onerror = function () {
-      delete window[callbackName];
-      renderErrorState("API Error — check deployment / response format.");
-      if (scriptEl.parentNode) {
-        scriptEl.parentNode.removeChild(scriptEl);
-      }
-    };
-
-    document.body.appendChild(scriptEl);
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    loadDashboard();
-    setInterval(loadDashboard, REFRESH_MS);
+function fmtMoney(n) {
+  return Number(n || 0).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
   });
+}
+
+function fmtNum(n) {
+  return Number(n || 0).toLocaleString("en-US");
+}
+
+function rankClass(index) {
+  if (index === 0) return "gold";
+  if (index === 1) return "silver";
+  if (index === 2) return "bronze";
+  return "neutral";
+}
+
+function rowIcon(index) {
+  const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+  return icons[index] || (index + 1);
+}
+
+function renderDashboard(data) {
+
+  const weekend = data.weekend || [];
+  const reviews = data.reviews || [];
+  const supplemental = data.supplemental || [];
+  const accountability = data.accountability || [];
+
+  // KPI TOTALS
+  const totalWeekendPremium = weekend.reduce((a,b) => a + Number(b.premium || 0), 0);
+  const totalAnnual = supplemental.reduce((a,b) => a + Number(b.annual || 0), 0);
+  const totalPolicies = supplemental.reduce((a,b) => a + Number(b.policies || 0), 0);
+
+  document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
+  document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+  document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
+
+  // WEEKEND
+  document.querySelector("#weekendTable tbody").innerHTML =
+    weekend.map((item,index) => `
+      <tr>
+        <td>
+          <span class="rank ${rankClass(index)}">
+            ${rowIcon(index)}
+          </span>
+        </td>
+        <td>${item.agent}</td>
+        <td class="money">${fmtMoney(item.premium)}</td>
+      </tr>
+    `).join("");
+
+  // REVIEWS
+  document.querySelector("#reviewsTable tbody").innerHTML =
+    reviews.map((item,index) => `
+      <tr>
+        <td>
+          <span class="rank ${rankClass(index)}">
+            ${rowIcon(index)}
+          </span>
+        </td>
+        <td>${item.agent}</td>
+        <td class="score">${fmtNum(item.reviews)}</td>
+      </tr>
+    `).join("");
+
+  // SUPPLEMENTAL
+  document.querySelector("#ciTable tbody").innerHTML =
+    supplemental.map((item,index) => `
+      <tr>
+        <td>
+          <span class="rank ${rankClass(index)}">
+            ${index + 1}
+          </span>
+        </td>
+        <td>${item.agent}</td>
+        <td class="score">${fmtNum(item.policies)}</td>
+        <td class="money">${fmtMoney(item.premium)}</td>
+        <td class="money">${fmtMoney(item.annual)}</td>
+      </tr>
+    `).join("");
+
+  // ACCOUNTABILITY
+  document.querySelector("#accountabilityTable tbody").innerHTML =
+    accountability.map((item,index) => `
+      <tr>
+        <td>
+          <span class="rank ${rankClass(index)}">
+            ${index + 1}
+          </span>
+        </td>
+        <td>${item.team}</td>
+        <td class="score">${fmtNum(item.total)}</td>
+      </tr>
+    `).join("");
+}
+
+function showError() {
+  document.getElementById("kpiPremium").textContent = "Error";
+  document.getElementById("kpiAnnual").textContent = "Error";
+  document.getElementById("kpiPolicies").textContent = "Error";
+}
+
+function loadDashboard() {
+
+  const callbackName = "dashboardCallback_" + Date.now();
+
+  window[callbackName] = function(data) {
+    renderDashboard(data);
+
+    delete window[callbackName];
+    script.remove();
+  };
+
+  const script = document.createElement("script");
+
+  script.src =
+    API_URL +
+    "?callback=" +
+    callbackName +
+    "&t=" +
+    Date.now();
+
+  script.onerror = function() {
+    showError();
+    delete window[callbackName];
+    script.remove();
+  };
+
+  document.body.appendChild(script);
+}
+
+loadDashboard();
+
+setInterval(loadDashboard, 60000);
 </script>

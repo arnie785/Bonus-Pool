@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bonus Pool Dashboard</title>
+
   <style>
     :root {
-      --bg: #081421;
-      --panel: rgba(16, 32, 51, 0.92);
-      --panel2: rgba(10, 18, 30, 0.96);
-      --line: rgba(255,255,255,0.08);
-      --text: #f8fafc;
-      --muted: #9fb0c7;
-      --teal: #18d1c8;
-      --blue: #4a8dff;
-      --purple: #a66bff;
-      --gold: #fbbf24;
-      --silver: #cbd5e1;
-      --bronze: #d97706;
-      --radius: 24px;
-      --shadow: 0 20px 50px rgba(0,0,0,.35);
+      --bg: #000000;
+      --panel: #070707;
+      --panel2: #0d0d0d;
+      --line: rgba(198,150,51,.32);
+      --line2: rgba(255,225,114,.18);
+      --text: #ffffff;
+      --muted: #b8b8bf;
+      --gold: #C69633;
+      --goldLight: #FFE172;
+      --silver: #d4d4d8;
+      --bronze: #cd7f32;
+      --radius: 26px;
+      --shadow: 0 0 0 1px rgba(198,150,51,.16), 0 0 20px rgba(198,150,51,.08);
     }
 
     * { box-sizing: border-box; }
@@ -27,29 +27,30 @@
     html, body {
       margin: 0;
       min-height: 100%;
+      background: #000;
     }
 
     body {
       min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(24,209,200,.14), transparent 24%),
-        radial-gradient(circle at top right, rgba(166,107,255,.12), transparent 26%),
-        linear-gradient(180deg, #09111a 0%, #081421 100%);
-      padding: 24px;
+        radial-gradient(circle at top left, rgba(198,150,51,.09), transparent 25%),
+        radial-gradient(circle at top right, rgba(255,225,114,.06), transparent 30%),
+        linear-gradient(180deg, #050505 0%, #000000 100%);
+      padding: 18px;
       overflow-x: hidden;
     }
 
     .wrap {
-      max-width: 1500px;
+      max-width: 1600px;
       margin: 0 auto;
     }
 
     .topbar {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 16px;
+      grid-template-columns: 1.18fr 1fr;
+      gap: 18px;
       margin-bottom: 18px;
     }
 
@@ -57,7 +58,7 @@
     .kpis,
     .card,
     .footer {
-      background: var(--panel2);
+      background: linear-gradient(180deg, rgba(10,10,10,.98), rgba(5,5,5,.98));
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -66,116 +67,134 @@
     .hero {
       display: flex;
       align-items: center;
-      gap: 18px;
-      padding: 22px 24px;
-      min-height: 132px;
+      gap: 20px;
+      min-height: 150px;
+      padding: 24px;
     }
 
     .badge {
-      width: 74px;
-      height: 74px;
+      width: 90px;
+      height: 90px;
+      flex: 0 0 auto;
       display: grid;
       place-items: center;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,204,77,.18), rgba(255,204,77,.05));
-      border: 1px solid rgba(255,204,77,.22);
-      font-size: 42px;
-      flex: 0 0 auto;
+      border-radius: 50%;
+      font-size: 44px;
+      border: 2px solid var(--goldLight);
+      background:
+        radial-gradient(circle at top, rgba(255,225,114,.25), rgba(198,150,51,.08));
+      box-shadow: 0 0 26px rgba(255,225,114,.15);
     }
 
-    h1 {
+    .heroText {
+      min-width: 0;
+    }
+
+    .heroText h1 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.3rem);
-      line-height: 1;
-      letter-spacing: .05em;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: .95;
+      letter-spacing: .04em;
+      font-weight: 900;
+      color: var(--goldLight);
       text-transform: uppercase;
     }
 
     .sub {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 1.05rem;
+      margin-top: 10px;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: var(--text);
     }
 
     .sub strong {
-      color: var(--teal);
+      color: var(--goldLight);
+      font-weight: 800;
     }
 
     .kpis {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 14px;
       padding: 16px;
     }
 
     .kpi {
+      min-height: 122px;
+      border-radius: 22px;
+      padding: 18px 18px 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      min-height: 106px;
-      padding: 16px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid var(--line);
+      gap: 16px;
+      border: 1px solid rgba(198,150,51,.28);
+      background:
+        linear-gradient(180deg, rgba(255,225,114,.06), rgba(255,255,255,.015));
+      box-shadow: inset 0 0 18px rgba(255,255,255,.02);
     }
 
     .kpiIcon {
-      width: 52px;
-      height: 52px;
+      width: 58px;
+      height: 58px;
+      flex: 0 0 auto;
       display: grid;
       place-items: center;
       border-radius: 18px;
-      font-size: 24px;
-      flex: 0 0 auto;
+      font-size: 26px;
+      background:
+        radial-gradient(circle at top, rgba(255,225,114,.24), rgba(198,150,51,.08));
+      border: 1px solid rgba(255,225,114,.28);
+      box-shadow: 0 0 14px rgba(255,225,114,.08);
     }
 
-    .kpi:nth-child(1) .kpiIcon { background: rgba(24,209,200,.14); }
-    .kpi:nth-child(2) .kpiIcon { background: rgba(74,141,255,.14); }
-    .kpi:nth-child(3) .kpiIcon { background: rgba(166,107,255,.14); }
-
     .kpiLabel {
-      color: var(--muted);
-      font-size: .9rem;
-      margin-bottom: 4px;
+      color: #d7d7dc;
+      font-size: .95rem;
+      line-height: 1.25;
+      margin-bottom: 6px;
     }
 
     .kpiValue {
-      font-size: 1.3rem;
-      font-weight: 800;
-      line-height: 1.1;
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: .01em;
+      font-variant-numeric: tabular-nums;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      gap: 18px;
     }
 
-    .card { overflow: hidden; }
+    .card {
+      overflow: hidden;
+    }
 
     .cardHeader {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 16px 18px;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: .02em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--line);
+      gap: 12px;
+      padding: 18px 20px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: .01em;
+      color: var(--goldLight);
+      border-bottom: 1px solid rgba(198,150,51,.24);
+      background: linear-gradient(90deg, rgba(198,150,51,.14), rgba(255,225,114,.03));
+      text-transform: none;
     }
 
-    .cardHeader.teal { background: linear-gradient(90deg, rgba(24,209,200,.22), rgba(24,209,200,.08)); }
-    .cardHeader.blue { background: linear-gradient(90deg, rgba(74,141,255,.22), rgba(74,141,255,.08)); }
-    .cardHeader.purple { background: linear-gradient(90deg, rgba(166,107,255,.22), rgba(166,107,255,.08)); }
-
     .ico {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       display: grid;
       place-items: center;
-      border-radius: 10px;
       color: white;
+      background:
+        radial-gradient(circle at top, rgba(255,225,114,.25), rgba(198,150,51,.08));
+      border: 1px solid rgba(255,225,114,.24);
     }
 
     .table {
@@ -184,70 +203,83 @@
     }
 
     .table thead th {
-      padding: 14px 16px;
+      padding: 16px 16px;
       text-align: left;
-      font-size: .92rem;
-      color: #bed2ee;
-      background: rgba(255,255,255,.03);
-      border-bottom: 1px solid var(--line);
+      font-size: .95rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255,255,255,.02);
+      border-bottom: 1px solid rgba(198,150,51,.16);
     }
 
     .table td {
-      padding: 14px 16px;
+      padding: 16px 16px;
       border-bottom: 1px solid rgba(255,255,255,.05);
       font-size: 1rem;
+      vertical-align: middle;
     }
 
     .money,
     .score {
       text-align: right;
-      font-weight: 700;
+      font-weight: 800;
       font-variant-numeric: tabular-nums;
+      color: #ffffff;
     }
 
-    .money { color: #79efe9; }
-    .score { color: #7ab1ff; }
-
     .rank {
-      width: 34px;
-      height: 34px;
+      width: 38px;
+      height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 12px;
-      font-weight: 800;
-      color: #09111a;
-      background: #dfe8f4;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: .01em;
+      color: #000;
+      background: rgba(255,255,255,.9);
     }
 
-    .rank.gold { background: var(--gold); }
-    .rank.silver { background: var(--silver); }
-    .rank.bronze { background: var(--bronze); }
+    .rank.gold {
+      background: linear-gradient(180deg, #FFE172, #C69633);
+    }
+
+    .rank.silver {
+      background: linear-gradient(180deg, #ffffff, #bdbdbd);
+    }
+
+    .rank.bronze {
+      background: linear-gradient(180deg, #f0a35e, #b56a2f);
+    }
+
     .rank.neutral {
-      background: rgba(24,209,200,.14);
-      color: var(--teal);
+      color: #fff;
+      border: 1px solid rgba(198,150,51,.2);
+      background: rgba(255,255,255,.03);
     }
 
     .footer {
       margin-top: 18px;
-      min-height: 90px;
+      min-height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 18px 22px;
       text-align: center;
-      background: linear-gradient(90deg, rgba(24,209,200,.11), rgba(74,141,255,.11));
     }
 
     .footerText {
-      font-size: 1.6rem;
+      font-size: clamp(1.1rem, 2.2vw, 1.9rem);
       font-weight: 800;
+      color: #ffffff;
+      line-height: 1.35;
     }
 
     .empty-row td {
       color: var(--muted);
       text-align: center;
-      padding: 18px 16px;
+      padding: 22px 16px;
     }
 
     @media (max-width: 1200px) {
@@ -259,248 +291,280 @@
       .kpis {
         grid-template-columns: 1fr;
       }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .heroText h1 {
+        font-size: 3rem;
+      }
     }
   </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <section class="topbar">
-    <div class="hero">
-      <div class="badge">🏆</div>
-      <div>
-        <h1>BONUS POOL</h1>
-        <div class="sub">Weekend Bonus <strong>May 15–17</strong></div>
-      </div>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi">
-        <div class="kpiIcon">👤</div>
-        <div>
-          <div class="kpiLabel">Total Weekend Premium</div>
-          <div class="kpiValue" id="kpiPremium">Loading...</div>
+    <section class="topbar">
+      <div class="hero">
+        <div class="badge">🏆</div>
+        <div class="heroText">
+          <h1>BONUS POOL</h1>
+          <div class="sub">Weekend Bonus <strong>May 15–17</strong></div>
         </div>
       </div>
 
-      <div class="kpi">
-        <div class="kpiIcon">🛡️</div>
-        <div>
-          <div class="kpiLabel">Total CI Annual</div>
-          <div class="kpiValue" id="kpiAnnual">Loading...</div>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpiIcon">💰</div>
+          <div>
+            <div class="kpiLabel">Total Weekend Premium</div>
+            <div class="kpiValue" id="kpiPremium">Loading...</div>
+          </div>
+        </div>
+
+        <div class="kpi">
+          <div class="kpiIcon">🛡️</div>
+          <div>
+            <div class="kpiLabel">Total CI Annual</div>
+            <div class="kpiValue" id="kpiAnnual">Loading...</div>
+          </div>
+        </div>
+
+        <div class="kpi">
+          <div class="kpiIcon">👥</div>
+          <div>
+            <div class="kpiLabel">Total Policies</div>
+            <div class="kpiValue" id="kpiPolicies">Loading...</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="kpi">
-        <div class="kpiIcon">👥</div>
-        <div>
-          <div class="kpiLabel">Total Policies</div>
-          <div class="kpiValue" id="kpiPolicies">Loading...</div>
+    <section class="grid">
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">🏆</span>
+          1. Weekend Bonus May 15–17
         </div>
-      </div>
-    </div>
-  </section>
+        <table class="table" id="weekendTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:right;">Premium</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-  <section class="grid">
-    <article class="card">
-      <div class="cardHeader teal">
-        <span class="ico" style="background:#18d1c8;">🏆</span>
-        1. Weekend Bonus May 15–17
-      </div>
-      <table class="table" id="weekendTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Agent</th>
-            <th style="text-align:right;">Premium</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">⭐</span>
+          2. Google Reviews Contest
+        </div>
+        <table class="table" id="reviewsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:right;">Reviews</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-    <article class="card">
-      <div class="cardHeader blue">
-        <span class="ico" style="background:#4a8dff;">⭐</span>
-        2. Google Reviews Contest
-      </div>
-      <table class="table" id="reviewsTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Agent</th>
-            <th style="text-align:right;">Reviews</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">🛡️</span>
+          3. Critical Illness — Supplemental
+        </div>
+        <table class="table" id="ciTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:right;">Policies</th>
+              <th style="text-align:right;">Premium</th>
+              <th style="text-align:right;">Annual</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-    <article class="card">
-      <div class="cardHeader purple">
-        <span class="ico" style="background:#a66bff;">🛡️</span>
-        3. Critical Illness — Supplemental
-      </div>
-      <table class="table" id="ciTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Agent</th>
-            <th style="text-align:right;">Policies</th>
-            <th style="text-align:right;">Premium</th>
-            <th style="text-align:right;">Annual</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">👥</span>
+          4. Accountability Partner
+        </div>
+        <table class="table" id="accountabilityTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Team</th>
+              <th style="text-align:right;">Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
 
-    <article class="card">
-      <div class="cardHeader purple">
-        <span class="ico" style="background:#a66bff;">👥</span>
-        4. Accountability Partner
-      </div>
-      <table class="table" id="accountabilityTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Team</th>
-            <th style="text-align:right;">Total</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
-  </section>
+    <section class="footer">
+      <div class="footerText">Great work team! Keep the momentum going and aim higher every weekend.</div>
+    </section>
 
-  <section class="footer">
-    <div class="footerText">🚀 Great work team! Keep the momentum going and aim higher every weekend!</div>
-  </section>
+  </div>
 
-</div>
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzo0SIPCMIrkm1stHD0ml-hLT4BtzRD-BQOEa34D3KOk18Z29HTWv1XiQSOi2p25TrT/exec";
 
-<script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzo0SIPCMIrkm1stHD0ml-hLT4BtzRD-BQOEa34D3KOk18Z29HTWv1XiQSOi2p25TrT/exec";
-
-function fmtMoney(n) {
-  return Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
-}
-
-function fmtNum(n) {
-  return Number(n || 0).toLocaleString("en-US");
-}
-
-function rankClass(index) {
-  if (index === 0) return "gold";
-  if (index === 1) return "silver";
-  if (index === 2) return "bronze";
-  return "neutral";
-}
-
-function rowIcon(index) {
-  const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
-  return icons[index] || (index + 1);
-}
-
-function emptyRow(colspan, message) {
-  return `<tr class="empty-row"><td colspan="${colspan}">${message}</td></tr>`;
-}
-
-function renderDashboard(data) {
-  const weekend = Array.isArray(data.weekend) ? data.weekend : [];
-  const reviews = Array.isArray(data.reviews) ? data.reviews : [];
-  const supplemental = Array.isArray(data.supplemental) ? data.supplemental : [];
-  const accountability = Array.isArray(data.accountability) ? data.accountability : [];
-
-  const totalWeekendPremium = weekend.reduce((sum, row) => sum + Number(row.premium || 0), 0);
-  const totalAnnual = supplemental.reduce((sum, row) => sum + Number(row.annual || 0), 0);
-  const totalPolicies = supplemental.reduce((sum, row) => sum + Number(row.policies || 0), 0);
-
-  document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
-  document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
-  document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
-
-  document.querySelector("#weekendTable tbody").innerHTML = weekend.length
-    ? weekend.map((item, index) => `
-      <tr>
-        <td><span class="rank ${rankClass(index)}">${rowIcon(index)}</span></td>
-        <td>${item.agent ?? ""}</td>
-        <td class="money">${fmtMoney(item.premium)}</td>
-      </tr>
-    `).join("")
-    : emptyRow(3, "No weekend data available.");
-
-  document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
-    ? reviews.map((item, index) => `
-      <tr>
-        <td><span class="rank ${rankClass(index)}">${rowIcon(index)}</span></td>
-        <td>${item.agent ?? ""}</td>
-        <td class="score">${fmtNum(item.reviews)}</td>
-      </tr>
-    `).join("")
-    : emptyRow(3, "No review data available.");
-
-  document.querySelector("#ciTable tbody").innerHTML = supplemental.length
-    ? supplemental.map((item, index) => `
-      <tr>
-        <td><span class="rank ${rankClass(index)}">${index + 1}</span></td>
-        <td>${item.agent ?? ""}</td>
-        <td class="score">${fmtNum(item.policies)}</td>
-        <td class="money">${fmtMoney(item.premium)}</td>
-        <td class="money">${fmtMoney(item.annual)}</td>
-      </tr>
-    `).join("")
-    : emptyRow(5, "No supplemental data available.");
-
-  document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
-    ? accountability.map((item, index) => `
-      <tr>
-        <td><span class="rank ${rankClass(index)}">${index + 1}</span></td>
-        <td>${item.team ?? ""}</td>
-        <td class="score">${fmtNum(item.total)}</td>
-      </tr>
-    `).join("")
-    : emptyRow(3, "No accountability data available.");
-}
-
-function showError(message) {
-  document.getElementById("kpiPremium").textContent = "Error";
-  document.getElementById("kpiAnnual").textContent = "Error";
-  document.getElementById("kpiPolicies").textContent = "Error";
-
-  document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
-  document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
-  document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
-  document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
-}
-
-function loadDashboard() {
-  const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-  const script = document.createElement("script");
-
-  window[callbackName] = function(data) {
-    try {
-      renderDashboard(data);
-    } finally {
-      delete window[callbackName];
-      script.remove();
+    function fmtMoney(n) {
+      return Number(n || 0).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      });
     }
-  };
 
-  script.src = `${API_URL}?mode=api&callback=${callbackName}&t=${Date.now()}`;
-  script.onerror = function() {
-    delete window[callbackName];
-    showError("API Error — check deployment / URL.");
-    script.remove();
-  };
+    function fmtNum(n) {
+      return Number(n || 0).toLocaleString("en-US");
+    }
 
-  document.body.appendChild(script);
-}
+    function rankClass(index) {
+      if (index === 0) return "gold";
+      if (index === 1) return "silver";
+      if (index === 2) return "bronze";
+      return "neutral";
+    }
 
-window.addEventListener("DOMContentLoaded", () => {
-  loadDashboard();
-  setInterval(loadDashboard, 60000);
-});
-</script>
+    function rowIcon(index) {
+      const icons = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
+      return icons[index] || String(index + 1);
+    }
+
+    function emptyRow(colspan, message) {
+      return '<tr class="empty-row"><td colspan="' + colspan + '">' + message + '</td></tr>';
+    }
+
+    function renderDashboard(data) {
+      const weekend = Array.isArray(data.weekend) ? data.weekend : [];
+      const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+      const supplemental = Array.isArray(data.supplemental) ? data.supplemental : [];
+      const accountability = Array.isArray(data.accountability) ? data.accountability : [];
+
+      const totalWeekendPremium = weekend.reduce(function(sum, row) {
+        return sum + Number(row.premium || 0);
+      }, 0);
+
+      const totalAnnual = supplemental.reduce(function(sum, row) {
+        return sum + Number(row.annual || 0);
+      }, 0);
+
+      const totalPolicies = supplemental.reduce(function(sum, row) {
+        return sum + Number(row.policies || 0);
+      }, 0);
+
+      document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
+      document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+      document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
+
+      document.querySelector("#weekendTable tbody").innerHTML = weekend.length
+        ? weekend.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent ?? "") + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No weekend data available.");
+
+      document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
+        ? reviews.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent ?? "") + '</td>' +
+                '<td class="score">' + fmtNum(item.reviews) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No review data available.");
+
+      document.querySelector("#ciTable tbody").innerHTML = supplemental.length
+        ? supplemental.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.agent ?? "") + '</td>' +
+                '<td class="score">' + fmtNum(item.policies) + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+                '<td class="money">' + fmtMoney(item.annual) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(5, "No supplemental data available.");
+
+      document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
+        ? accountability.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.team ?? "") + '</td>' +
+                '<td class="score">' + fmtNum(item.total) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No accountability data available.");
+    }
+
+    function showError(message) {
+      document.getElementById("kpiPremium").textContent = "Error";
+      document.getElementById("kpiAnnual").textContent = "Error";
+      document.getElementById("kpiPolicies").textContent = "Error";
+
+      document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
+      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
+    }
+
+    function loadDashboard() {
+      var callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+      var script = document.createElement("script");
+
+      window[callbackName] = function(data) {
+        try {
+          renderDashboard(data);
+        } finally {
+          delete window[callbackName];
+          if (script && script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        }
+      };
+
+      script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
+      script.onerror = function() {
+        delete window[callbackName];
+        showError("API Error — check deployment / URL.");
+        if (script && script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+      };
+
+      document.body.appendChild(script);
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      loadDashboard();
+      setInterval(loadDashboard, 60000);
+    });
+  </script>
 </body>
 </html>

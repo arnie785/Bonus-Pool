@@ -421,41 +421,176 @@
   </div>
 
   <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyux0NJkA1VxghB6Zwxdc0f2H1mV_o3dS1fFN0cbh4wG2xsliTi0-uXwkHGpbTyrDwX/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbyux0NJkA1VxghB6Zwxdc0f2H1mV_o3dS1fFN0cbh4wG2xsliTi0-uXwkHGpbTyrDwX/exec";
 
-  function loadDashboard() {
-    const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-    const script = document.createElement("script");
+    function fmtMoney(n) {
+      return Number(n || 0).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      });
+    }
 
-    window[callbackName] = function(data) {
-      console.log("API DATA:", data);
-      try {
-        renderDashboard(data);
-      } catch (err) {
-        console.error("Render error:", err);
-        showError("Render failed.");
-      } finally {
-        delete window[callbackName];
-        script.remove();
+    function fmtNum(n) {
+      return Number(n || 0).toLocaleString("en-US");
+    }
+
+    function rankClass(index) {
+      if (index === 0) return "gold";
+      if (index === 1) return "silver";
+      if (index === 2) return "bronze";
+      return "neutral";
+    }
+
+    function rowIcon(index) {
+      const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+      return icons[index] || String(index + 1);
+    }
+
+    function emptyRow(colspan, message) {
+      return '<tr class="empty-row"><td colspan="' + colspan + '">' + message + '</td></tr>';
+    }
+
+    function renderDashboard(data) {
+      const weekend = data?.sections?.weekend?.rows || [];
+      const reviews = data?.sections?.reviews?.rows || [];
+      const supplemental = data?.sections?.supplemental?.rows || [];
+      const accountability = data?.sections?.accountability?.rows || [];
+
+      const totalWeekendPremium =
+        data?.stats?.totalWeekendPremium ??
+        weekend.reduce(function(sum, row) { return sum + Number(row.premium || 0); }, 0);
+
+      const totalAnnual =
+        data?.stats?.totalCAnnual ??
+        supplemental.reduce(function(sum, row) { return sum + Number(row.annual || 0); }, 0);
+
+      const totalPolicies =
+        data?.stats?.totalPolicies ??
+        supplemental.reduce(function(sum, row) { return sum + Number(row.policies || 0); }, 0);
+
+      document.querySelector(".heroText h1").textContent = data?.meta?.title || "BONUS POOL";
+
+      const sub = document.querySelector(".sub");
+      if (sub) {
+        sub.innerHTML = (data?.meta?.subtitle || "Weekend Bonus") + ' <strong>May 15–17</strong>';
       }
-    };
 
-    script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
+      const footer = document.querySelector(".footerText");
+      if (footer) {
+        footer.textContent = data?.meta?.footerMessage || "Great work team! Keep the momentum going and aim higher every day.";
+      }
 
-    script.onerror = function() {
-      console.error("API load error");
-      delete window[callbackName];
-      showError("API Error — check deployment / URL.");
-      script.remove();
-    };
+      document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
+      document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+      document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
 
-    document.body.appendChild(script);
-  }
+      document.querySelector("#weekendTable tbody").innerHTML = weekend.length
+        ? weekend.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No weekend data available.");
 
-  window.addEventListener("DOMContentLoaded", function() {
-    loadDashboard();
-    setInterval(loadDashboard, 60000);
-  });
-</script>
+      document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
+        ? reviews.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.reviews) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No review data available.");
+
+      document.querySelector("#ciTable tbody").innerHTML = supplemental.length
+        ? supplemental.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.policies) + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+                '<td class="money">' + fmtMoney(item.annual) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(5, "No supplemental data available.");
+
+      document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
+        ? accountability.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.team || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.total) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No accountability data available.");
+    }
+
+    function showError(message) {
+      document.getElementById("kpiPremium").textContent = "Error";
+      document.getElementById("kpiAnnual").textContent = "Error";
+      document.getElementById("kpiPolicies").textContent = "Error";
+
+      document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
+      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
+    }
+
+    function loadDashboard() {
+      const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+      const script = document.createElement("script");
+      let finished = false;
+
+      function cleanup() {
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+
+      window[callbackName] = function(data) {
+        finished = true;
+        try {
+          renderDashboard(data);
+        } catch (err) {
+          console.error("Render error:", err);
+          showError("Render failed.");
+        } finally {
+          cleanup();
+        }
+      };
+
+      script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
+
+      script.onerror = function() {
+        if (!finished) {
+          showError("API Error — check deployment / URL.");
+        }
+        cleanup();
+      };
+
+      document.body.appendChild(script);
+
+      setTimeout(function() {
+        if (!finished) {
+          showError("API Timeout — callback did not return.");
+          cleanup();
+        }
+      }, 10000);
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      loadDashboard();
+      setInterval(loadDashboard, 60000);
+    });
+  </script>
 </body>
 </html>

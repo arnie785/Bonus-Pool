@@ -331,7 +331,7 @@
     <article class="card">
       <div class="cardHeader">
         <span class="ico">🏆</span>
-        <span id="weekendTitle">1. Weekend Bonus May 15–17</span>
+        <span id="weekendTitle">1. Weekend Bonus</span>
       </div>
       <table class="table" id="weekendTable">
         <thead>
@@ -372,9 +372,9 @@
           <tr>
             <th>#</th>
             <th>Agent</th>
-            <th style="text-align:right;">Policies</th>
-            <th style="text-align:right;">Premium</th>
-            <th style="text-align:right;">Annual</th>
+            <th style="text-align:left;">Policies</th>
+            <th style="text-align:left;">Premium</th>
+            <th style="text-align:left;">Annual</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -451,10 +451,10 @@
     }, 0);
 
     document.getElementById("titleText").textContent = data?.meta?.title || "BONUS POOL";
-    document.getElementById("subtitleText").innerHTML = (data?.meta?.subtitle || "Weekend Bonus") + ' <strong>May 15–17</strong>';
+    document.getElementById("subtitleText").innerHTML = (data?.meta?.subtitle || "Weekend, Weekly and Monthly Bonus");
     document.getElementById("footerText").textContent = data?.meta?.footerMessage || "Great work team! Keep the momentum going and aim higher every weekend!";
 
-    document.getElementById("weekendTitle").textContent = data?.sections?.weekend?.title || "1. Weekend Bonus May 15–17";
+    document.getElementById("weekendTitle").textContent = data?.sections?.weekend?.title || "1. Weekend Bonus";
     document.getElementById("reviewsTitle").textContent = data?.sections?.reviews?.title || "2. Google Reviews Contest";
     document.getElementById("suppTitle").textContent = data?.sections?.supplemental?.title || "3. Critical Illness — Supplemental";
     document.getElementById("acctTitle").textContent = data?.sections?.accountability?.title || "4. Accountability Partner";

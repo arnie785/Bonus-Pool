@@ -421,150 +421,41 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyux0NJkA1VxghB6Zwxdc0f2H1mV_o3dS1fFN0cbh4wG2xsliTi0-uXwkHGpbTyrDwX/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyux0NJkA1VxghB6Zwxdc0f2H1mV_o3dS1fFN0cbh4wG2xsliTi0-uXwkHGpbTyrDwX/exec";
 
-    function fmtMoney(n) {
-      return Number(n || 0).toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD"
-      });
-    }
+  function loadDashboard() {
+    const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+    const script = document.createElement("script");
 
-    function fmtNum(n) {
-      return Number(n || 0).toLocaleString("en-US");
-    }
-
-    function rankClass(index) {
-      if (index === 0) return "gold";
-      if (index === 1) return "silver";
-      if (index === 2) return "bronze";
-      return "neutral";
-    }
-
-    function rowIcon(index) {
-      const icons = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"];
-      return icons[index] || String(index + 1);
-    }
-
-    function emptyRow(colspan, message) {
-      return '<tr class="empty-row"><td colspan="' + colspan + '">' + message + '</td></tr>';
-    }
-
-    function renderDashboard(data) {
-      const weekend = Array.isArray(data.weekend) ? data.weekend : [];
-      const reviews = Array.isArray(data.reviews) ? data.reviews : [];
-      const supplemental = Array.isArray(data.supplemental) ? data.supplemental : [];
-      const accountability = Array.isArray(data.accountability) ? data.accountability : [];
-
-      const totalWeekendPremium = weekend.reduce(function(sum, row) {
-        return sum + Number(row.premium || 0);
-      }, 0);
-
-      const totalAnnual = supplemental.reduce(function(sum, row) {
-        return sum + Number(row.annual || 0);
-      }, 0);
-
-      const totalPolicies = supplemental.reduce(function(sum, row) {
-        return sum + Number(row.policies || 0);
-      }, 0);
-
-      document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
-      document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
-      document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
-
-      document.querySelector("#weekendTable tbody").innerHTML = weekend.length
-        ? weekend.map(function(item, index) {
-            return (
-              '<tr>' +
-                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
-                '<td>' + (item.agent ?? "") + '</td>' +
-                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
-              '</tr>'
-            );
-          }).join("")
-        : emptyRow(3, "No weekend data available.");
-
-      document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
-        ? reviews.map(function(item, index) {
-            return (
-              '<tr>' +
-                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
-                '<td>' + (item.agent ?? "") + '</td>' +
-                '<td class="score">' + fmtNum(item.reviews) + '</td>' +
-              '</tr>'
-            );
-          }).join("")
-        : emptyRow(3, "No review data available.");
-
-      document.querySelector("#ciTable tbody").innerHTML = supplemental.length
-        ? supplemental.map(function(item, index) {
-            return (
-              '<tr>' +
-                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
-                '<td>' + (item.agent ?? "") + '</td>' +
-                '<td class="score">' + fmtNum(item.policies) + '</td>' +
-                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
-                '<td class="money">' + fmtMoney(item.annual) + '</td>' +
-              '</tr>'
-            );
-          }).join("")
-        : emptyRow(5, "No supplemental data available.");
-
-      document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
-        ? accountability.map(function(item, index) {
-            return (
-              '<tr>' +
-                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
-                '<td>' + (item.team ?? "") + '</td>' +
-                '<td class="score">' + fmtNum(item.total) + '</td>' +
-              '</tr>'
-            );
-          }).join("")
-        : emptyRow(3, "No accountability data available.");
-    }
-
-    function showError(message) {
-      document.getElementById("kpiPremium").textContent = "Error";
-      document.getElementById("kpiAnnual").textContent = "Error";
-      document.getElementById("kpiPolicies").textContent = "Error";
-
-      document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
-      document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
-      document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
-      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
-    }
-
-    function loadDashboard() {
-      var callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-      var script = document.createElement("script");
-
-      window[callbackName] = function(data) {
-        try {
-          renderDashboard(data);
-        } finally {
-          delete window[callbackName];
-          if (script && script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        }
-      };
-
-      script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
-      script.onerror = function() {
+    window[callbackName] = function(data) {
+      console.log("API DATA:", data);
+      try {
+        renderDashboard(data);
+      } catch (err) {
+        console.error("Render error:", err);
+        showError("Render failed.");
+      } finally {
         delete window[callbackName];
-        showError("API Error — check deployment / URL.");
-        if (script && script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
-      };
+        script.remove();
+      }
+    };
 
-      document.body.appendChild(script);
-    }
+    script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
 
-    window.addEventListener("DOMContentLoaded", function() {
-      loadDashboard();
-      setInterval(loadDashboard, 60000);
-    });
-  </script>
+    script.onerror = function() {
+      console.error("API load error");
+      delete window[callbackName];
+      showError("API Error — check deployment / URL.");
+      script.remove();
+    };
+
+    document.body.appendChild(script);
+  }
+
+  window.addEventListener("DOMContentLoaded", function() {
+    loadDashboard();
+    setInterval(loadDashboard, 60000);
+  });
+</script>
 </body>
 </html>

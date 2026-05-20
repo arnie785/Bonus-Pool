@@ -5,7 +5,7 @@
   const fmtMoney = (n) =>
     Number(n || 0).toLocaleString("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "USD"
     });
 
   const fmtNum = (n) => Number(n || 0).toLocaleString("en-US");
@@ -118,22 +118,26 @@
     setLoadingState();
 
     const callbackName = `bonusPoolCb_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    let scriptEl = document.createElement("script");
 
     window[callbackName] = function (data) {
       try {
         renderDashboard(data);
       } finally {
         delete window[callbackName];
-        if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+        if (scriptEl && scriptEl.parentNode) {
+          scriptEl.parentNode.removeChild(scriptEl);
+        }
       }
     };
 
-    const scriptEl = document.createElement("script");
     scriptEl.src = `${API_URL}?callback=${encodeURIComponent(callbackName)}&t=${Date.now()}`;
     scriptEl.onerror = function () {
       delete window[callbackName];
       renderErrorState("API Error — check deployment / response format.");
-      if (scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+      if (scriptEl.parentNode) {
+        scriptEl.parentNode.removeChild(scriptEl);
+      }
     };
 
     document.body.appendChild(scriptEl);

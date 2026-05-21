@@ -105,10 +105,6 @@
       white-space: nowrap;
     }
 
-    .sub strong {
-      color: var(--goldLight);
-    }
-
     .kpis {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -121,7 +117,7 @@
       align-items: center;
       gap: 12px;
       min-height: 86px;
-      padding: 12px 14px;      
+      padding: 12px 14px;
       border-radius: 20px;
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border: 1px solid var(--line);
@@ -160,7 +156,9 @@
       gap: 14px;
     }
 
-    .card { overflow: hidden; }
+    .card {
+      overflow: hidden;
+    }
 
     .cardHeader {
       display: flex;
@@ -239,6 +237,32 @@
       border: 1px solid rgba(198,150,51,.20);
     }
 
+    .fullWidth {
+      width: 100%;
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+
+    .fullWidth .table {
+      min-width: 1000px;
+    }
+
+    .fullWidth .table thead th,
+    .fullWidth .table td {
+      text-align: center;
+    }
+
+    .fullWidth .table td:nth-child(2),
+    .fullWidth .table thead th:nth-child(2) {
+      text-align: left;
+    }
+
+    .fullWidth .table tfoot td {
+      font-weight: 800;
+      color: var(--goldLight);
+      background: rgba(255,225,114,.04);
+    }
+
     .footer {
       margin-top: 16px;
       min-height: 86px;
@@ -289,269 +313,369 @@
   </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <section class="topbar">
-    <div class="hero">
-      <div class="badge">🏆</div>
-      <div class="heroText">
-        <h1 id="titleText">BONUS POOL</h1>
-        <div class="sub" id="subtitleText">Weekend Weekly and Monthly Bonus </div>
-      </div>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi">
-        <div class="kpiIcon">💰</div>
-        <div>
-          <div class="kpiLabel">Total Weekend Premium</div>
-          <div class="kpiValue" id="kpiPremium">Loading...</div>
+    <section class="topbar">
+      <div class="hero">
+        <div class="badge">🏆</div>
+        <div class="heroText">
+          <h1 id="titleText">BONUS POOL</h1>
+          <div class="sub" id="subtitleText">Weekend Weekly and Monthly Bonus</div>
         </div>
       </div>
 
-      <div class="kpi">
-        <div class="kpiIcon">🛡️</div>
-        <div>
-          <div class="kpiLabel">Total CI Annual</div>
-          <div class="kpiValue" id="kpiAnnual">Loading...</div>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpiIcon">💰</div>
+          <div>
+            <div class="kpiLabel">Total Weekend Premium</div>
+            <div class="kpiValue" id="kpiPremium">Loading...</div>
+          </div>
+        </div>
+
+        <div class="kpi">
+          <div class="kpiIcon">🛡️</div>
+          <div>
+            <div class="kpiLabel">Total CI Annual</div>
+            <div class="kpiValue" id="kpiAnnual">Loading...</div>
+          </div>
+        </div>
+
+        <div class="kpi">
+          <div class="kpiIcon">👥</div>
+          <div>
+            <div class="kpiLabel">Total Policies</div>
+            <div class="kpiValue" id="kpiPolicies">Loading...</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="kpi">
-        <div class="kpiIcon">👥</div>
-        <div>
-          <div class="kpiLabel">Total Policies</div>
-          <div class="kpiValue" id="kpiPolicies">Loading...</div>
+    <section class="grid">
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">🏆</span>
+          <span id="weekendTitle">1. Weekend Bonus</span>
         </div>
-      </div>
-    </div>
-  </section>
+        <table class="table" id="weekendTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:left;">Premium</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-  <section class="grid">
-    <article class="card">
-      <div class="cardHeader">
-        <span class="ico">🏆</span>
-        <span id="weekendTitle">1. Weekend Bonus</span>
-      </div>
-      <table class="table" id="weekendTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Agent</th>
-            <th style="text-align:left;">Premium</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">⭐</span>
+          <span id="reviewsTitle">2. Google Reviews Contest</span>
+        </div>
+        <table class="table" id="reviewsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:left;">Reviews</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-    <article class="card">
-      <div class="cardHeader">
-        <span class="ico">⭐</span>
-        <span id="reviewsTitle">2. Google Reviews Contest</span>
-      </div>
-      <table class="table" id="reviewsTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Agent</th>
-            <th style="text-align:left;">Reviews</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </article>
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">🛡️</span>
+          <span id="suppTitle">3. Critical Illness — Supplemental</span>
+        </div>
+        <table class="table" id="ciTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:left;">Policies</th>
+              <th style="text-align:left;">Premium</th>
+              <th style="text-align:left;">Annual</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
 
-    <article class="card">
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">👥</span>
+          <span id="acctTitle">4. Accountability Partner</span>
+        </div>
+        <table class="table" id="accountabilityTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Team</th>
+              <th style="text-align:left;">Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+
+    <section class="card fullWidth">
       <div class="cardHeader">
         <span class="ico">🛡️</span>
-        <span id="suppTitle">3. Critical Illness — Supplemental</span>
+        <span>5. Allstate Production Summary</span>
       </div>
-      <table class="table" id="ciTable">
+
+      <table class="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Agent</th>
-            <th style="text-align:left;">Policies</th>
-            <th style="text-align:left;">Premium</th>
-            <th style="text-align:left;">Annual</th>
+            <th style="text-align:left;">Policy Count</th>
+            <th style="text-align:left;">Monthly Premium</th>
+            <th style="text-align:left;">Annualized Premium (AIP)</th>
           </tr>
         </thead>
-        <tbody></tbody>
-      </table>
-    </article>
-
-    <article class="card">
-      <div class="cardHeader">
-        <span class="ico">👥</span>
-        <span id="acctTitle">4. Accountability Partner</span>
-      </div>
-      <table class="table" id="accountabilityTable">
-        <thead>
+        <tbody>
           <tr>
-            <th>#</th>
-            <th>Team</th>
-            <th style="text-align:left;">Total</th>
+            <td><span class="rank gold">1</span></td>
+            <td>Dakota</td>
+            <td class="score">84</td>
+            <td class="money">$5,278.36</td>
+            <td class="money">$63,340.32</td>
           </tr>
-        </thead>
-        <tbody></tbody>
+          <tr>
+            <td><span class="rank silver">2</span></td>
+            <td>Ny</td>
+            <td class="score">78</td>
+            <td class="money">$6,486.07</td>
+            <td class="money">$77,832.84</td>
+          </tr>
+          <tr>
+            <td><span class="rank bronze">3</span></td>
+            <td>Tonya</td>
+            <td class="score">72</td>
+            <td class="money">$4,391.12</td>
+            <td class="money">$52,693.44</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">4</span></td>
+            <td>Christy</td>
+            <td class="score">45</td>
+            <td class="money">$4,075.29</td>
+            <td class="money">$48,903.48</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">5</span></td>
+            <td>Lore</td>
+            <td class="score">16</td>
+            <td class="money">$1,115.99</td>
+            <td class="money">$13,391.88</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">6</span></td>
+            <td>Chelle</td>
+            <td class="score">14</td>
+            <td class="money">$312.45</td>
+            <td class="money">$3,749.40</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">7</span></td>
+            <td>Sharise</td>
+            <td class="score">12</td>
+            <td class="money">$406.18</td>
+            <td class="money">$4,874.16</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">8</span></td>
+            <td>Caleb</td>
+            <td class="score">9</td>
+            <td class="money">$857.95</td>
+            <td class="money">$10,295.40</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">9</span></td>
+            <td>Misty</td>
+            <td class="score">5</td>
+            <td class="money">$190.37</td>
+            <td class="money">$2,284.44</td>
+          </tr>
+          <tr>
+            <td><span class="rank neutral">10</span></td>
+            <td>Verson</td>
+            <td class="score">2</td>
+            <td class="money">$41.88</td>
+            <td class="money">$502.56</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td class="score"><strong>337</strong></td>
+            <td class="money"><strong>$23,155.66</strong></td>
+            <td class="money"><strong>$277,867.92</strong></td>
+          </tr>
+        </tfoot>
       </table>
-    </article>
-  </section>
+    </section>
 
-  <section class="footer">
-    <div class="footerText" id="footerText">Great work team! Keep the momentum going and aim higher every weekend!</div>
-  </section>
+    <section class="footer">
+      <div class="footerText" id="footerText">Great work team! Keep the momentum going and aim higher every weekend!</div>
+    </section>
 
-</div>
+  </div>
 
-<script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbxjh8QOkdXSKIWpPerrI1hG61xBgPkjnMS3biKJjUb5t-sPU8Xm0MiurEDXVURDM41l/exec";
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxjh8QOkdXSKIWpPerrI1hG61xBgPkjnMS3biKJjUb5t-sPU8Xm0MiurEDXVURDM41l/exec";
 
-  function fmtMoney(n) {
-    return Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
-  }
+    function fmtMoney(n) {
+      return Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    }
 
-  function fmtNum(n) {
-    return Number(n || 0).toLocaleString("en-US");
-  }
+    function fmtNum(n) {
+      return Number(n || 0).toLocaleString("en-US");
+    }
 
-  function rankClass(index) {
-    if (index === 0) return "gold";
-    if (index === 1) return "silver";
-    if (index === 2) return "bronze";
-    return "neutral";
-  }
+    function rankClass(index) {
+      if (index === 0) return "gold";
+      if (index === 1) return "silver";
+      if (index === 2) return "bronze";
+      return "neutral";
+    }
 
-  function rowIcon(index) {
-    const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
-    return icons[index] || String(index + 1);
-  }
+    function rowIcon(index) {
+      const icons = ["🥇","🥈","🥉","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+      return icons[index] || String(index + 1);
+    }
 
-  function emptyRow(colspan, message) {
-    return '<tr class="empty-row"><td colspan="' + colspan + '">' + message + '</td></tr>';
-  }
+    function emptyRow(colspan, message) {
+      return '<tr class="empty-row"><td colspan="' + colspan + '">' + message + '</td></tr>';
+    }
 
-  function renderDashboard(data) {
-    const weekend = data?.sections?.weekend?.rows || [];
-    const reviews = data?.sections?.reviews?.rows || [];
-    const supplemental = data?.sections?.supplemental?.rows || [];
-    const accountability = data?.sections?.accountability?.rows || [];
+    function renderDashboard(data) {
+      const weekend = data?.sections?.weekend?.rows || [];
+      const reviews = data?.sections?.reviews?.rows || [];
+      const supplemental = data?.sections?.supplemental?.rows || [];
+      const accountability = data?.sections?.accountability?.rows || [];
 
-    const totalWeekendPremium = data?.stats?.totalWeekendPremium ?? weekend.reduce(function(sum, row) {
-      return sum + Number(row.premium || 0);
-    }, 0);
+      const totalWeekendPremium = data?.stats?.totalWeekendPremium ?? weekend.reduce(function(sum, row) {
+        return sum + Number(row.premium || 0);
+      }, 0);
 
-    const totalAnnual = data?.stats?.totalCAnnual ?? supplemental.reduce(function(sum, row) {
-      return sum + Number(row.annual || 0);
-    }, 0);
+      const totalAnnual = data?.stats?.totalCAnnual ?? supplemental.reduce(function(sum, row) {
+        return sum + Number(row.annual || 0);
+      }, 0);
 
-    const totalPolicies = data?.stats?.totalPolicies ?? supplemental.reduce(function(sum, row) {
-      return sum + Number(row.policies || 0);
-    }, 0);
+      const totalPolicies = data?.stats?.totalPolicies ?? supplemental.reduce(function(sum, row) {
+        return sum + Number(row.policies || 0);
+      }, 0);
 
-    document.getElementById("titleText").textContent = data?.meta?.title || "BONUS POOL";
-    document.getElementById("subtitleText").innerHTML = (data?.meta?.subtitle || "Weekend, Weekly and Monthly Bonus");
-    document.getElementById("footerText").textContent = data?.meta?.footerMessage || "Great work team! Keep the momentum going and aim higher every weekend!";
+      document.getElementById("titleText").textContent = data?.meta?.title || "BONUS POOL";
+      document.getElementById("subtitleText").textContent = data?.meta?.subtitle || "Weekend Weekly and Monthly Bonus";
+      document.getElementById("footerText").textContent = data?.meta?.footerMessage || "Great work team! Keep the momentum going and aim higher every weekend!";
 
-    document.getElementById("weekendTitle").textContent = data?.sections?.weekend?.title || "1. Weekend Bonus";
-    document.getElementById("reviewsTitle").textContent = data?.sections?.reviews?.title || "2. Google Reviews Contest";
-    document.getElementById("suppTitle").textContent = data?.sections?.supplemental?.title || "3. Critical Illness — Supplemental";
-    document.getElementById("acctTitle").textContent = data?.sections?.accountability?.title || "4. Accountability Partner";
+      document.getElementById("weekendTitle").textContent = data?.sections?.weekend?.title || "1. Weekend Bonus";
+      document.getElementById("reviewsTitle").textContent = data?.sections?.reviews?.title || "2. Google Reviews Contest";
+      document.getElementById("suppTitle").textContent = data?.sections?.supplemental?.title || "3. Critical Illness — Supplemental";
+      document.getElementById("acctTitle").textContent = data?.sections?.accountability?.title || "4. Accountability Partner";
 
-    document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
-    document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
-    document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
+      document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
+      document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
+      document.getElementById("kpiPolicies").textContent = fmtNum(totalPolicies);
 
-    document.querySelector("#weekendTable tbody").innerHTML = weekend.length
-      ? weekend.map(function(item, index) {
-          return (
-            '<tr>' +
-              '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
-              '<td>' + (item.agent || "") + '</td>' +
-              '<td class="money">' + fmtMoney(item.premium) + '</td>' +
-            '</tr>'
-          );
-        }).join("")
-      : emptyRow(3, "No weekend data available.");
+      document.querySelector("#weekendTable tbody").innerHTML = weekend.length
+        ? weekend.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No weekend data available.");
 
-    document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
-      ? reviews.map(function(item, index) {
-          return (
-            '<tr>' +
-              '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
-              '<td>' + (item.agent || "") + '</td>' +
-              '<td class="score">' + fmtNum(item.reviews) + '</td>' +
-            '</tr>'
-          );
-        }).join("")
-      : emptyRow(3, "No review data available.");
+      document.querySelector("#reviewsTable tbody").innerHTML = reviews.length
+        ? reviews.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.reviews) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No review data available.");
 
-    document.querySelector("#ciTable tbody").innerHTML = supplemental.length
-      ? supplemental.map(function(item, index) {
-          return (
-            '<tr>' +
-              '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
-              '<td>' + (item.agent || "") + '</td>' +
-              '<td class="score">' + fmtNum(item.policies) + '</td>' +
-              '<td class="money">' + fmtMoney(item.premium) + '</td>' +
-              '<td class="money">' + fmtMoney(item.annual) + '</td>' +
-            '</tr>'
-          );
-        }).join("")
-      : emptyRow(5, "No supplemental data available.");
+      document.querySelector("#ciTable tbody").innerHTML = supplemental.length
+        ? supplemental.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.agent || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.policies) + '</td>' +
+                '<td class="money">' + fmtMoney(item.premium) + '</td>' +
+                '<td class="money">' + fmtMoney(item.annual) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(5, "No supplemental data available.");
 
-    document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
-      ? accountability.map(function(item, index) {
-          return (
-            '<tr>' +
-              '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
-              '<td>' + (item.team || "") + '</td>' +
-              '<td class="score">' + fmtNum(item.total) + '</td>' +
-            '</tr>'
-          );
-        }).join("")
-      : emptyRow(3, "No accountability data available.");
-  }
+      document.querySelector("#accountabilityTable tbody").innerHTML = accountability.length
+        ? accountability.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
+                '<td>' + (item.team || "") + '</td>' +
+                '<td class="score">' + fmtNum(item.total) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(3, "No accountability data available.");
+    }
 
-  function showError(message) {
-    document.getElementById("kpiPremium").textContent = "Error";
-    document.getElementById("kpiAnnual").textContent = "Error";
-    document.getElementById("kpiPolicies").textContent = "Error";
+    function showError(message) {
+      document.getElementById("kpiPremium").textContent = "Error";
+      document.getElementById("kpiAnnual").textContent = "Error";
+      document.getElementById("kpiPolicies").textContent = "Error";
 
-    document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
-    document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
-    document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
-    document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
-  }
+      document.querySelector("#weekendTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#ciTable tbody").innerHTML = emptyRow(5, message);
+      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
+    }
 
-  function loadDashboard() {
-    const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-    const script = document.createElement("script");
+    function loadDashboard() {
+      const callbackName = "dashboardCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+      const script = document.createElement("script");
 
-    window[callbackName] = function(data) {
-      try {
-        renderDashboard(data);
-      } finally {
+      window[callbackName] = function(data) {
+        try {
+          renderDashboard(data);
+        } finally {
+          delete window[callbackName];
+          script.remove();
+        }
+      };
+
+      script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
+      script.onerror = function() {
         delete window[callbackName];
+        showError("API Error — check deployment / URL.");
         script.remove();
-      }
-    };
+      };
 
-    script.src = API_URL + "?mode=api&callback=" + callbackName + "&t=" + Date.now();
-    script.onerror = function() {
-      delete window[callbackName];
-      showError("API Error — check deployment / URL.");
-      script.remove();
-    };
+      document.body.appendChild(script);
+    }
 
-    document.body.appendChild(script);
-  }
-
-  window.addEventListener("DOMContentLoaded", function() {
-    loadDashboard();
-    setInterval(loadDashboard, 60000);
-  });
-</script>
+    window.addEventListener("DOMContentLoaded", function() {
+      loadDashboard();
+      setInterval(loadDashboard, 60000);
+    });
+  </script>
 </body>
 </html>

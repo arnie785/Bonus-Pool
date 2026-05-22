@@ -380,10 +380,10 @@
 
           <div>
             <div class="kpiLabel">
-              Total Policies
+              Total Policy
             </div>
 
-            <div class="kpiValue" id="kpiPolicies">
+            <div class="kpiValue" id="kpiPolicycount">
               Loading...
             </div>
           </div>
@@ -511,7 +511,7 @@
 
   <script>
 
-    const API_URL = "https://script.google.com/macros/s/AKfycbzYbUOvtpg-HD7dd2eYZFGfYuzVYxEma0_ooJwyxAwfiYR7Jacu6soOHg5h2EmF0ti9/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwHap4A1sm7TcX_n6VRnIQQc-ZnZ21mWKJtXm7rBRneJIdYu903-RieQYmQcehWZymk/exec";
 
     function fmtMoney(n) {
       return Number(n || 0).toLocaleString(
@@ -584,10 +584,10 @@
           return sum + Number(row.annual || 0);
         }, 0);
 
-      const totalPolicies =
-        data?.stats?.totalPolicies ??
+      const totalPolicycount =
+        data?.stats?.totalPolicycount ??
         supplemental.reduce(function(sum, row) {
-          return sum + Number(row.policies || 0);
+          return sum + Number(row.policycount || 0);
         }, 0);
 
       document.getElementById("titleText").textContent =
@@ -628,8 +628,8 @@
       document.getElementById("kpiAnnual").textContent =
         fmtMoney(totalAnnual);
 
-      document.getElementById("kpiPolicies").textContent =
-        fmtNum(totalPolicies);
+      document.getElementById("kpipolicycount").textContent =
+        fmtNum(totalpolicycount);
 
       document.querySelector("#weekendTable tbody").innerHTML =
         weekend.length
@@ -664,7 +664,7 @@
                 '<tr>' +
                   '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
                   '<td>' + (item.agent || "") + '</td>' +
-                  '<td class="score">' + fmtNum(item.policies) + '</td>' +
+                  '<td class="score">' + fmtNum(item.policycount) + '</td>' +
                   '<td class="money">' + fmtMoney(item.premium) + '</td>' +
                   '<td class="money">' + fmtMoney(item.annual) + '</td>' +
                 '</tr>'
@@ -709,7 +709,7 @@
       document.getElementById("kpiAnnual").textContent =
         "Error";
 
-      document.getElementById("kpiPolicies").textContent =
+      document.getElementById("kpipolicycount").textContent =
         "Error";
 
       document.querySelector("#weekendTable tbody").innerHTML =

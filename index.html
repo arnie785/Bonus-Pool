@@ -338,7 +338,7 @@
         <div class="kpi">
           <div class="kpiIcon">🛡️</div>
           <div>
-            <div class="kpiLabel">Total CI Annual</div>
+            <div class="kpiLabel">Total Allstate Annual</div>
             <div class="kpiValue" id="kpiAnnual">Loading...</div>
           </div>
         </div>
@@ -451,7 +451,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwYkD95ZtTmxyZ4HaoFGh6N9WBOIsZ5IWg5noxA_4dYqi4J1WAsQkqHigSTWDUz71Wy/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzeSArTn8L7N77jvVGO8zf0blgiytvf1eYN8hXyXSYFb6qVG3cAjuaS_gTN0zH60BEO/exec";
 
     function fmtMoney(n) {
       return Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
@@ -488,9 +488,9 @@
     return sum + Number(row.premium || 0);
   }, 0);
 
-  const totalAnnual = data?.stats?.totalCAnnual || 0;
-  const totalPolicycount = data?.stats?.totalpolicycount || 0;
-
+  const totalAnnual = data?.stats?.totalAllstateAnnual || 0;
+  const totalPolicycount = data?.stats?.totalAllstatePolicy || 0;
+      
   document.getElementById("titleText").textContent = data?.meta?.title || "BONUS POOL";
   document.getElementById("subtitleText").textContent = data?.meta?.subtitle || "Weekend Weekly and Monthly Bonus";
   document.getElementById("footerText").textContent = data?.meta?.footerMessage || "Great work team! Keep the momentum going and aim higher every day!";

@@ -535,7 +535,7 @@
           '<tr>' +
             '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
             '<td>' + (item.agent || "") + '</td>' +
-            '<td class="score">' + (item.ratio || "0.00%") + '</td>' +
+            '<td class="score">' + (Number(item.ratio || 0) * 100).toFixed(2) + '%</td>' +
           '</tr>'
         );
       }).join("")

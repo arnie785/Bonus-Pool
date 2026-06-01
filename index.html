@@ -419,6 +419,7 @@
               <th>#</th>
               <th>Team</th>
               <th style="text-align:left;">Total</th>
+              <th style="text-align:left;">Winner</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -453,7 +454,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxJmXKCvizTpAkQHud2GyJWQEZegj8DKcH65fRcHmYqrhaHNDeI1cEBFA5jLx3-FX5m/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycby5jiw2zDl8To4CdNnEjsCvak4nZzz3Dscbw6kJaWmsDXYjuUIyAOOW6rpFMhHKMbA/exec";
 
     function toNumber(value) {
       if (value === null || value === undefined || value === "") return 0;
@@ -604,10 +605,11 @@
                 '<td><span class="rank ' + rankClass(index) + '">' + (index + 1) + '</span></td>' +
                 '<td>' + safeText(item.team) + '</td>' +
                 '<td class="score">' + fmtNum(item.total) + '</td>' +
+                '<td class="score">' + safeText(item.winner) + '</td>' +
               '</tr>'
             );
           }).join("")
-        : emptyRow(3, "No accountability data available.");
+        : emptyRow(4, "No accountability data available.");
 
       document.querySelector("#businessEverydayTable tbody").innerHTML = businessEveryday.length
         ? businessEveryday.map(function(item, index) {
@@ -633,7 +635,7 @@
       document.querySelector("#weekendTable tbody").innerHTML = emptyRow(4, message);
       document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(4, message);
       document.querySelector("#referralTable tbody").innerHTML = emptyRow(4, message);
-      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(4, message);
       document.querySelector("#businessEverydayTable tbody").innerHTML = emptyRow(6, message);
     }
 

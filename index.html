@@ -424,6 +424,26 @@
           <tbody></tbody>
         </table>
       </article>
+
+      <article class="card">
+        <div class="cardHeader">
+          <span class="ico">📅</span>
+          <span id="businessEverydayTitle">5. Business Everyday</span>
+        </div>
+        <table class="table" id="businessEverydayTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Agent</th>
+              <th style="text-align:left;">Days Qualified</th>
+              <th style="text-align:left;">Required Days</th>
+              <th style="text-align:left;">Status</th>
+              <th style="text-align:left;">Winner</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
     </section>
 
     <section class="footer">
@@ -433,7 +453,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwGmQZKQzQwyDy7MvNxns7YdixTbNu1Px8vlqQ0tlBGg9ri55YctTtyz_5dSr1QzDuK/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxJmXKCvizTpAkQHud2GyJWQEZegj8DKcH65fRcHmYqrhaHNDeI1cEBFA5jLx3-FX5m/exec";
 
     function toNumber(value) {
       if (value === null || value === undefined || value === "") return 0;
@@ -499,6 +519,7 @@
       const reviews = data?.sections?.reviews?.rows || [];
       const referral = data?.sections?.referral?.rows || [];
       const accountability = data?.sections?.accountability?.rows || [];
+      const businessEveryday = data?.sections?.businessEveryday?.rows || [];
 
       const totalWeekendPremium = toNumber(data?.stats?.totalWeekendPremium) ||
         weekend.reduce(function(sum, row) {
@@ -530,6 +551,7 @@
       document.getElementById("reviewsTitle").textContent = data?.sections?.reviews?.title || "2. Google Reviews Contest";
       document.getElementById("referralTitle").textContent = data?.sections?.referral?.title || "3. Referral Contest";
       document.getElementById("acctTitle").textContent = data?.sections?.accountability?.title || "4. Accountability Partner";
+      document.getElementById("businessEverydayTitle").textContent = data?.sections?.businessEveryday?.title || "5. Business Everyday";
 
       document.getElementById("kpiPremium").textContent = fmtMoney(totalWeekendPremium);
       document.getElementById("kpiAnnual").textContent = fmtMoney(totalAnnual);
@@ -586,6 +608,21 @@
             );
           }).join("")
         : emptyRow(3, "No accountability data available.");
+
+      document.querySelector("#businessEverydayTable tbody").innerHTML = businessEveryday.length
+        ? businessEveryday.map(function(item, index) {
+            return (
+              '<tr>' +
+                '<td><span class="rank ' + rankClass(index) + '">' + rowIcon(index) + '</span></td>' +
+                '<td>' + safeText(item.agent) + '</td>' +
+                '<td class="score">' + fmtNum(item.daysQualified) + '</td>' +
+                '<td class="score">' + fmtNum(item.requiredDays) + '</td>' +
+                '<td class="score">' + safeText(item.status) + '</td>' +
+                '<td class="score">' + safeText(item.winner) + '</td>' +
+              '</tr>'
+            );
+          }).join("")
+        : emptyRow(6, "No Business Everyday data available.");
     }
 
     function showError(message) {
@@ -597,6 +634,7 @@
       document.querySelector("#reviewsTable tbody").innerHTML = emptyRow(4, message);
       document.querySelector("#referralTable tbody").innerHTML = emptyRow(4, message);
       document.querySelector("#accountabilityTable tbody").innerHTML = emptyRow(3, message);
+      document.querySelector("#businessEverydayTable tbody").innerHTML = emptyRow(6, message);
     }
 
     function loadDashboard() {
